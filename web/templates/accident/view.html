@@ -1,0 +1,309 @@
+<!-- web/templates/accident/view.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ accident.title }} - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('accident.list') }}">Hodisalar</a>
+<span>/</span>
+<span class="current">{{ accident.title }}</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .view-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .view-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .view-title {
+        flex: 1;
+    }
+
+    .view-title h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .view-title .badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-year {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-category {
+        background: rgba(99, 102, 241, 0.15);
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .view-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .info-card h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: #f8fafc;
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+
+    .description-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        color: #f8fafc;
+        line-height: 1.8;
+        font-size: 1rem;
+    }
+
+    .file-id-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        word-break: break-all;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .view-header {
+            flex-direction: column;
+        }
+
+        .view-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .btn {
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="view-container">
+    <!-- Header -->
+    <div class="view-header">
+        <div class="view-title">
+            <h1>
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>{{ accident.title }}</span>
+            </h1>
+            <div class="badges">
+                {% if accident.year %}
+                <span class="badge badge-year">
+                    <i class="fas fa-calendar"></i> {{ accident.year.name }}
+                </span>
+                {% endif %}
+                {% if accident.category %}
+                <span class="badge badge-category">
+                    <i class="fas fa-tag"></i> {{ accident.category.name }}
+                </span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="view-actions">
+            <a href="{{ url_for('accident.edit', id=accident.id) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i>
+                <span>Tahrirlash</span>
+            </a>
+            <a href="{{ url_for('accident.list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                <span>Orqaga</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Description -->
+    {% if accident.description %}
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-align-left"></i>
+            <span>Hodisa Tavsifi</span>
+        </h2>
+        <div class="description-box">
+            {{ accident.description }}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Info Grid -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-info-circle"></i>
+            <span>Qo'shimcha Ma'lumotlar</span>
+        </h2>
+
+        <div class="info-grid">
+            <!-- ID -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-hashtag"></i> ID
+                </div>
+                <div class="info-value">#{{ accident.id }}</div>
+            </div>
+
+            <!-- Yil -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-calendar"></i> Yil
+                </div>
+                <div class="info-value">
+                    {{ accident.year.name if accident.year else '-' }}
+                </div>
+            </div>
+
+            <!-- Kategoriya -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-tag"></i> Kategoriya
+                </div>
+                <div class="info-value">
+                    {{ accident.category.name if accident.category else '-' }}
+                </div>
+            </div>
+
+            <!-- Yaratilgan -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-clock"></i> Yaratilgan
+                </div>
+                <div class="info-value">
+                    {% if accident.created_at %}
+                    {{ accident.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF File ID -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-file-pdf"></i>
+            <span>PDF Fayl</span>
+        </h2>
+        <div class="file-id-box">
+            {{ accident.file_pdf }}
+        </div>
+    </div>
+</div>
+{% endblock %}

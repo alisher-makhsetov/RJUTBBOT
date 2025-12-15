@@ -1,0 +1,346 @@
+<!-- web/templates/folder/create.html -->
+{% extends 'base.html' %}
+
+{% block title %}Yangi Papka - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('folder.list') }}">Papkalar</a>
+<span>/</span>
+<span class="current">Yangi</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-header {
+        margin-bottom: 35px;
+    }
+
+    .form-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .form-header p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #f8fafc;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-group label .required {
+        color: #ef4444;
+        margin-left: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 10px;
+        color: #f8fafc;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .form-group select:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .form-help {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    /* Grid */
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h1>
+                <i class="fas fa-folder-plus"></i>
+                <span>Yangi Papka Yaratish</span>
+            </h1>
+            <p>Yangi papka ma'lumotlarini kiriting</p>
+        </div>
+
+        <form method="POST" id="folderForm">
+            <!-- Papka Nomi -->
+            <div class="form-group">
+                <label for="name">
+                    Papka Nomi
+                    <span class="required">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Masalan: Elektr xavfsizligi"
+                    required
+                    autofocus
+                >
+                <p class="form-help">Papkaning to'liq nomini kiriting</p>
+            </div>
+
+            <!-- Bo'lim va Turi -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="section">
+                        Bo'lim
+                        <span class="required">*</span>
+                    </label>
+                    <select id="section" name="section" required>
+                        <option value="">Tanlang...</option>
+                        <option value="MM">MM - Mehnat Muhofazasi</option>
+                        <option value="SX">SX - Sanoat Xavfsizligi</option>
+                    </select>
+                    <p class="form-help">Papka qaysi bo'limga tegishli</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_type">
+                        Papka Turi
+                        <span class="required">*</span>
+                    </label>
+                    <select
+                        id="parent_type"
+                        name="parent_type"
+                        required
+                        disabled
+                    >
+                        <option value="">Avval bo'limni tanlang...</option>
+                    </select>
+                    <p class="form-help">Papka turini tanlang</p>
+                </div>
+            </div>
+
+            <!-- Tartib Raqami -->
+            <div class="form-group">
+                <label for="order_index">
+                    Tartib Raqami
+                    <span style="color: #64748b; font-size: 0.85rem; font-weight: 400;">(ixtiyoriy)</span>
+                </label>
+                <input
+                    type="number"
+                    id="order_index"
+                    name="order_index"
+                    placeholder="0"
+                    value="0"
+                    min="0"
+                >
+                <p class="form-help">Papkalarni tartiblash uchun (kichik raqam birinchi ko'rsatiladi)</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Saqlash</span>
+                </button>
+                <a href="{{ url_for('folder.list') }}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    <span>Bekor qilish</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Papka turlari - Bo'limga qarab
+    const folderTypes = {
+        'MM': [
+            { value: 'himoya_vositalari', text: "🦺 Himoya Vositalari" },
+            { value: 'nizomlar', text: "📋 Nizomlar" },
+            { value: 'oquv_texnik', text: "🎓 O'quv Texnik Mashg'ulot" },
+        ],
+        'SX': [
+            { value: 'kranlar', text: "🏗️ Kranlar" },
+            { value: 'qozonxonalar', text: "🏭 Qozonxonalar" },
+            { value: 'bosim_idishlari', text: "⚙️ Bosim Ostidagi Ichlovchi Sig'im" },
+            { value: 'toliq_texnik', text: "🛠️ To‘liq Kexnik Ko‘rik" }
+
+        ]
+    };
+
+    const sectionSelect = document.getElementById('section');
+    const parentTypeSelect = document.getElementById('parent_type');
+
+    // Bo'lim o'zgarganda papka turlarini yuklash
+    sectionSelect.addEventListener('change', function() {
+        const section = this.value;
+
+        // Clear options
+        parentTypeSelect.innerHTML = '<option value="">Tanlang...</option>';
+
+        if (section && folderTypes[section]) {
+            // Add options for selected section
+            folderTypes[section].forEach(type => {
+                const option = document.createElement('option');
+                option.value = type.value;
+                option.textContent = type.text;
+                parentTypeSelect.appendChild(option);
+            });
+
+            // Enable select
+            parentTypeSelect.disabled = false;
+        } else {
+            // Disable select
+            parentTypeSelect.disabled = true;
+            parentTypeSelect.innerHTML = '<option value="">Avval bo\'limni tanlang...</option>';
+        }
+
+        // Reset parent_type value
+        parentTypeSelect.value = '';
+    });
+
+    // Form submit validation
+    document.getElementById('folderForm').addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value.trim();
+        const section = document.getElementById('section').value;
+        const parentType = document.getElementById('parent_type').value;
+
+        // Validate name
+        if (!name) {
+            e.preventDefault();
+            alert('Papka nomini kiriting!');
+            document.getElementById('name').focus();
+            return false;
+        }
+
+        // Validate section
+        if (!section) {
+            e.preventDefault();
+            alert('Bo\'limni tanlang!');
+            document.getElementById('section').focus();
+            return false;
+        }
+
+        // Validate parent_type
+        if (!parentType) {
+            e.preventDefault();
+            alert('Papka turini tanlang!');
+            document.getElementById('parent_type').focus();
+            return false;
+        }
+
+        // All validations passed
+        return true;
+    });
+
+    // Prevent form submission on Enter key in text inputs (except submit button)
+    document.getElementById('folderForm').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+{% endblock %}

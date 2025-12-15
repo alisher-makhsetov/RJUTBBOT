@@ -1,0 +1,264 @@
+<!-- web/templates/folder/view.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ folder.name }} - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}"><i class="fas fa-home"></i></a>
+<span>/</span>
+<a href="{{ url_for('folder.list') }}">Papkalar</a>
+<span>/</span>
+<span>{{ folder.name }}</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .view-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .view-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .view-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-edit:hover {
+        background: rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-back {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-back:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    .info-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 25px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: #f8fafc;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .badge-mm {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .badge-sx {
+        background: rgba(139, 92, 246, 0.1);
+        color: #8b5cf6;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .files-section h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 20px;
+    }
+
+    .files-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .file-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .file-card:hover {
+        background: rgba(15, 23, 42, 0.8);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .file-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #6366f1;
+    }
+
+    .file-name {
+        color: #f8fafc;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .file-meta {
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    .empty-files {
+        text-align: center;
+        padding: 40px;
+        color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="view-container">
+    <div class="view-header">
+        <h1>📂 {{ folder.name }}</h1>
+        <div class="header-actions">
+            <a href="{{ url_for('folder.edit', id=folder.id) }}" class="btn btn-edit">
+                <i class="fas fa-edit"></i>
+                <span>Tahrirlash</span>
+            </a>
+            <a href="{{ url_for('folder.list') }}" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i>
+                <span>Orqaga</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Folder Info -->
+    <div class="info-card">
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">ID</span>
+                <span class="info-value">#{{ folder.id }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Bo'lim</span>
+                <div class="info-value">
+                    {% if folder.section == 'MM' %}
+                    <span class="badge badge-mm">MM - Mehnat Muhofazasi</span>
+                    {% elif folder.section == 'SX' %}
+                    <span class="badge badge-sx">SX - Sanoat Xavfsizligi</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Papka Turi</span>
+                <span class="info-value">{{ folder.parent_type or '-' }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Tartib Raqami</span>
+                <span class="info-value">{{ folder.order_index }}</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Fayllar Soni</span>
+                <span class="info-value">{{ files|length }} ta</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Yaratilgan</span>
+                <span class="info-value">{{ folder.created_at.strftime('%Y-%m-%d %H:%M') if folder.created_at else '-' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Files -->
+    <div class="files-section info-card">
+        <h2>📄 Fayllar</h2>
+
+        {% if files %}
+        <div class="files-grid">
+            {% for file in files %}
+            <div class="file-card">
+                <div class="file-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="file-name">{{ file.name }}</div>
+                <div class="file-meta">
+                    <div>File ID: {{ file.file_id[:20] }}...</div>
+                    <div>Tartib: {{ file.order_index }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-files">
+            <i class="fas fa-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
+            <p>Bu papkada hali fayl yo'q</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

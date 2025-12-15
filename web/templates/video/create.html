@@ -1,0 +1,533 @@
+<!-- web/templates/video/create.html -->
+{% extends 'base.html' %}
+
+{% block title %}Yangi Video - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('video.list') }}">Videolar</a>
+<span>/</span>
+<span class="current">Yangi</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-header {
+        margin-bottom: 35px;
+    }
+
+    .form-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .form-header p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+    }
+
+    .form-section {
+        margin-bottom: 35px;
+        padding-bottom: 35px;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .form-section h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #f8fafc;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-group label .required {
+        color: #ef4444;
+        margin-left: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 10px;
+        color: #f8fafc;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-help {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    /* Section Buttons */
+    .section-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .section-btn {
+        background: rgba(15, 23, 42, 0.6);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 10px;
+        padding: 18px 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .section-btn input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .section-btn:hover {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .section-btn.active {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.5);
+        color: #6366f1;
+    }
+
+    /* Categories Grid */
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .categories-grid.hidden {
+        display: none;
+    }
+
+    .category-item {
+        background: rgba(15, 23, 42, 0.6);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 10px;
+        padding: 14px 18px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .category-item:hover {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .category-item input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .category-item label {
+        cursor: pointer;
+        margin: 0;
+        font-size: 0.95rem;
+        flex: 1;
+    }
+
+    .category-item.selected {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.5);
+    }
+
+    .no-categories {
+        text-align: center;
+        padding: 40px 20px;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+
+    .no-categories i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        opacity: 0.3;
+        display: block;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .form-card {
+            padding: 30px 20px;
+        }
+
+        .section-buttons {
+            grid-template-columns: 1fr;
+        }
+
+        .categories-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h1>
+                <i class="fas fa-video"></i>
+                <span>Yangi Video</span>
+            </h1>
+            <p>Video ma'lumotlarini kiriting</p>
+        </div>
+
+        <form method="POST" id="videoForm">
+            <!-- Basic Info -->
+            <div class="form-section">
+                <h2>
+                    <i class="fas fa-info-circle"></i>
+                    <span>Asosiy Ma'lumotlar</span>
+                </h2>
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name">
+                        Video Nomi
+                        <span class="required">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Masalan: Elektr xavfsizligi darslari"
+                        required
+                        autofocus
+                    >
+                    <p class="form-help">Videoning to'liq nomini kiriting</p>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">
+                        Tavsif
+                        <span class="required">*</span>
+                    </label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Video haqida qisqacha ma'lumot..."
+                        required
+                        rows="4"
+                    ></textarea>
+                    <p class="form-help">Video mazmunini qisqacha tasvirlab bering</p>
+                </div>
+
+                <!-- File ID -->
+                <div class="form-group">
+                    <label for="file">
+                        Telegram File ID
+                        <span class="required">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="file"
+                        name="file"
+                        placeholder="BAACAgIAAxkBAAIC..."
+                        required
+                    >
+                    <p class="form-help">Telegram botdan yuklangan video fayl ID'si</p>
+                </div>
+            </div>
+
+            <!-- Section Selection -->
+            <div class="form-section">
+                <h2>
+                    <i class="fas fa-layer-group"></i>
+                    <span>Bo'lim</span>
+                    <span class="required">*</span>
+                </h2>
+
+                <div class="section-buttons">
+                    <label class="section-btn" onclick="selectSection('MM', this)">
+                        <input type="radio" name="section" value="MM" required>
+                        <span>MM (Mehnat Muhofazasi)</span>
+                    </label>
+                    <label class="section-btn" onclick="selectSection('SX', this)">
+                        <input type="radio" name="section" value="SX" required>
+                        <span>SX (Sanoat Xavfsizligi)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Category Selection -->
+            <div class="form-section">
+                <h2>
+                    <i class="fas fa-tag"></i>
+                    <span>Kategoriya</span>
+                    <span class="required">*</span>
+                </h2>
+
+                <div id="categoriesContainer">
+                    <div class="no-categories">
+                        <i class="fas fa-arrow-up"></i>
+                        <p>Avval bo'limni tanlang</p>
+                    </div>
+
+                    <!-- MM Categories -->
+                    <div id="categories-MM" class="categories-grid hidden">
+                        {% for category in categories %}
+                        {% if category.section == 'MM' %}
+                        <div class="category-item" onclick="selectCategory(this)">
+                            <input
+                                type="radio"
+                                name="category_id"
+                                value="{{ category.id }}"
+                                id="cat_{{ category.id }}"
+                                required
+                            >
+                            <label for="cat_{{ category.id }}">{{ category.name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- SX Categories -->
+                    <div id="categories-SX" class="categories-grid hidden">
+                        {% for category in categories %}
+                        {% if category.section == 'SX' %}
+                        <div class="category-item" onclick="selectCategory(this)">
+                            <input
+                                type="radio"
+                                name="category_id"
+                                value="{{ category.id }}"
+                                id="cat_{{ category.id }}"
+                                required
+                            >
+                            <label for="cat_{{ category.id }}">{{ category.name }}</label>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Saqlash</span>
+                </button>
+                <a href="{{ url_for('video.list') }}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    <span>Bekor qilish</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Section selection
+    function selectSection(section, element) {
+        // Remove active from all
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        element.classList.add('active');
+
+        // Hide all category grids
+        document.querySelectorAll('.categories-grid').forEach(grid => {
+            grid.classList.add('hidden');
+        });
+
+        // Hide no-categories message
+        document.querySelector('.no-categories').style.display = 'none';
+
+        // Show selected section categories
+        const categoryGrid = document.getElementById('categories-' + section);
+        if (categoryGrid) {
+            categoryGrid.classList.remove('hidden');
+        }
+
+        // Reset category selection
+        document.querySelectorAll('input[name="category_id"]').forEach(input => {
+            input.checked = false;
+        });
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+    }
+
+    // Category selection
+    function selectCategory(element) {
+        // Remove selected from all in current section
+        const parent = element.closest('.categories-grid');
+        parent.querySelectorAll('.category-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        // Add selected to clicked
+        element.classList.add('selected');
+
+        // Check radio
+        const radio = element.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.checked = true;
+        }
+    }
+
+    // Form validation
+    document.getElementById('videoForm').addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const file = document.getElementById('file').value.trim();
+        const section = document.querySelector('input[name="section"]:checked');
+        const category = document.querySelector('input[name="category_id"]:checked');
+
+        if (!name) {
+            e.preventDefault();
+            alert('Video nomini kiriting!');
+            document.getElementById('name').focus();
+            return false;
+        }
+
+        if (!description) {
+            e.preventDefault();
+            alert('Tavsifni kiriting!');
+            document.getElementById('description').focus();
+            return false;
+        }
+
+        if (!file) {
+            e.preventDefault();
+            alert('Fayl ID ni kiriting!');
+            document.getElementById('file').focus();
+            return false;
+        }
+
+        if (!section) {
+            e.preventDefault();
+            alert('Bo\'limni tanlang!');
+            return false;
+        }
+
+        if (!category) {
+            e.preventDefault();
+            alert('Kategoriyani tanlang!');
+            return false;
+        }
+
+        return true;
+    });
+</script>
+{% endblock %}

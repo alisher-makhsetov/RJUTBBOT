@@ -1,0 +1,1145 @@
+# Kazakh translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-12-10 22:45+0500\n"
+"PO-Revision-Date: 2025-12-09 17:38+0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: kk\n"
+"Language-Team: kk <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: bot/handlers/language_handler.py:83 main.py:23
+msgid "Botni ishga tushirish"
+msgstr "Ботти иске түсириў"
+
+#: bot/handlers/language_handler.py:84 main.py:24
+msgid "Yordam"
+msgstr "Жәрдем"
+
+#: bot/buttons/inline.py:45 bot/buttons/inline.py:194 bot/buttons/inline.py:224
+#: bot/buttons/inline.py:285 bot/buttons/inline.py:346
+#: bot/buttons/inline.py:363 bot/buttons/inline.py:379
+#: bot/buttons/inline.py:395 bot/buttons/inline.py:456
+#: bot/buttons/inline.py:518 bot/buttons/inline.py:535
+#: bot/buttons/inline.py:551 bot/buttons/inline.py:567
+#: bot/buttons/inline.py:601 bot/buttons/inline.py:671
+#: bot/buttons/inline.py:688 bot/buttons/inline.py:704
+#: bot/buttons/inline.py:720 bot/buttons/inline.py:742
+#: bot/buttons/inline.py:802 bot/buttons/inline.py:864
+#: bot/buttons/inline.py:881 bot/buttons/inline.py:897
+#: bot/buttons/inline.py:909 bot/buttons/inline.py:925
+msgid "🏠 Asosiy Menyu"
+msgstr "🏠 Тийкарғы меню"
+
+#: bot/buttons/inline.py:137 bot/buttons/inline.py:176
+#: bot/buttons/inline.py:185
+msgid "👉 Keyingi savol"
+msgstr "👉 Кейинги сораў"
+
+#: bot/buttons/inline.py:153 bot/buttons/inline.py:172
+msgid "⏰ Vaqt tugadi!"
+msgstr "⏰ Ўақыт тамам болды!"
+
+#: bot/buttons/inline.py:193 bot/buttons/inline.py:325
+#: bot/buttons/inline.py:359 bot/buttons/inline.py:375
+#: bot/buttons/inline.py:391 bot/buttons/inline.py:497
+#: bot/buttons/inline.py:531 bot/buttons/inline.py:547
+#: bot/buttons/inline.py:563 bot/buttons/inline.py:642
+#: bot/buttons/inline.py:684 bot/buttons/inline.py:700
+#: bot/buttons/inline.py:716 bot/buttons/inline.py:732
+#: bot/buttons/inline.py:843 bot/buttons/inline.py:877
+#: bot/buttons/inline.py:893 bot/buttons/inline.py:921 bot/buttons/reply.py:33
+#: bot/handlers/language_handler.py:187
+msgid "↩️ Orqaga"
+msgstr "↩️ Артқа"
+
+#: bot/buttons/inline.py:205
+msgid ""
+"📢 Men Test topshirdim:\n"
+"✅ Natija: {score}/{total}\n"
+"📈 Foiz: {percentage}%\n"
+"\n"
+"🎯 Siz ham bilim darajangizni tekshirib ko'ring:"
+msgstr ""
+"📢 Мен Тест тапсырдым:\n"
+"✅ Нәтийже: {score}/{total}\n"
+"📈 Пайыз: {percentage}%\n"
+"\n"
+"🎯 Сиз де билим дәрежесинизди тексерип көриң:"
+
+#: bot/buttons/inline.py:214
+msgid "📤 Natijani ulashish"
+msgstr "📤 Нәтийжени бөлисиў"
+
+#: bot/buttons/inline.py:220
+msgid "🔄 Qayta Test"
+msgstr "🔄 Қайта Тест"
+
+#: bot/buttons/inline.py:257 bot/buttons/inline.py:317
+#: bot/buttons/inline.py:428 bot/buttons/inline.py:489
+#: bot/buttons/inline.py:634 bot/buttons/inline.py:775
+#: bot/buttons/inline.py:835
+msgid "⬅️ Oldingi"
+msgstr "⬅️ Алдынғы"
+
+#: bot/buttons/inline.py:266 bot/buttons/inline.py:334
+#: bot/buttons/inline.py:437 bot/buttons/inline.py:506
+#: bot/buttons/inline.py:651 bot/buttons/inline.py:783
+#: bot/buttons/inline.py:852
+msgid "Keyingi ➡️"
+msgstr "Кейинги ➡️"
+
+#: bot/buttons/inline.py:277 bot/buttons/inline.py:448
+#: bot/buttons/inline.py:794
+msgid "📊 Statistika"
+msgstr "📊 Статистика"
+
+#: bot/buttons/inline.py:593 bot/buttons/inline.py:736
+msgid "📊 Umumiy Statistika"
+msgstr "📊 Улыўма статистика"
+
+#: bot/buttons/inline.py:663
+msgid "📊 Yil Statistikasi"
+msgstr "📊 Жыл статистикасы"
+
+#: bot/buttons/reply.py:10
+msgid "👷 Mehnat Muhofazasi"
+msgstr "👷 Мийнетти Қорғаў"
+
+#: bot/buttons/reply.py:11
+msgid "⚠️ Sanoat Xavfsizligi"
+msgstr "⚠️ Санаат Қәўипсизлиги"
+
+#: bot/buttons/reply.py:12
+msgid "🌐 Tilni O'zgartirish"
+msgstr "🌐 Тилди Өзгертиў"
+
+#: bot/buttons/reply.py:22
+msgid "📱 Telefon raqamimni yuborish"
+msgstr "📱 Телефон номеримди жибериў"
+
+#: bot/buttons/reply.py:30 bot/handlers/language_handler.py:184
+msgid "🇺🇿 Uzbek"
+msgstr "🇺🇿 Өзбек"
+
+#: bot/buttons/reply.py:31 bot/handlers/language_handler.py:185
+msgid "🇷🇺 Rus"
+msgstr "🇷🇺 Рус"
+
+#: bot/buttons/reply.py:32 bot/handlers/language_handler.py:186
+msgid "🇺🇿 Qoraqalpoq"
+msgstr "🇺🇿 Қарақалпақ"
+
+#: bot/buttons/reply.py:48 bot/buttons/reply.py:68
+msgid "📝 Test"
+msgstr "📝 Тест"
+
+#: bot/buttons/reply.py:49 bot/buttons/reply.py:69
+msgid "📚 Konspektlar"
+msgstr "📚 Конспектлер"
+
+#: bot/buttons/reply.py:50
+msgid "📋 Nizomlar"
+msgstr "📋 Нызамлар"
+
+#: bot/buttons/reply.py:51
+msgid "🦺 Himoya Vositalari"
+msgstr "🦺 Қорганыў Қураллары"
+
+#: bot/buttons/reply.py:52
+msgid "⚠️ Baxtsiz Hodisalar"
+msgstr "⚠️ Бахыцыз Ҳәдийселер"
+
+#: bot/buttons/reply.py:53 bot/buttons/reply.py:73
+msgid "🎬 Video Materiallar"
+msgstr "🎬 Видео Материаллар"
+
+#: bot/buttons/reply.py:54
+msgid "🎓 O'quv Texnik Mashg'ulot"
+msgstr "🎓 Оқыў Техникалық Шынығыў"
+
+#: bot/buttons/reply.py:55 bot/buttons/reply.py:75
+msgid "🏠 Bosh Sahifa"
+msgstr "🏠 Бас Бет"
+
+#: bot/buttons/reply.py:70
+msgid "🏭 Qozonxonalar"
+msgstr "🏭 ️Қазанханалар"
+
+#: bot/buttons/reply.py:71
+msgid "🏗️ Kranlar"
+msgstr "🏗️ ️ Кранлар"
+
+#: bot/buttons/reply.py:72
+msgid "⚙️ Bosim Ostidagi Ichlovchi Sig'im"
+msgstr "⚙️ Басым Астында Ислейтуғын Сыйымлық"
+
+#: bot/buttons/reply.py:74
+msgid "🛠️ To‘liq Texnik Ko‘rik"
+msgstr "🛠️ Толық Техник Көрик"
+
+#: bot/utils/texts.py:12
+msgid ""
+"📝 Ism va Familyangizni to'liq kiriting.\n"
+" {example}"
+msgstr ""
+"📝 Атыңыз ҳәм Фамилиянгызды толық киргизиң.\n"
+" {example}"
+
+#: bot/utils/texts.py:13 bot/utils/texts.py:19
+msgid "👉 Masalan : "
+msgstr "👉 Мәселен : "
+
+#: bot/utils/texts.py:18
+msgid ""
+"❌ Iltimos, Ism va Familyangizni to'liq kiriting.\n"
+" {example}"
+msgstr ""
+"❌ Илтимас, Атыңыз ҳәм Фамилиянгызды толық киргизиң.\n"
+" {example}"
+
+#: bot/utils/texts.py:24
+msgid "📱 Telefon raqamingizni yuborish uchun, iltimos, pastdagi tugmani bosing."
+msgstr "📱 Телефон номериңизди жибериў ушын, илтимас, төмендеги түймени басың."
+
+#: bot/utils/texts.py:28
+msgid "❌ Iltimos, '📱 Raqamni yuborish' tugmasidan foydalaning."
+msgstr "❌ Илтимас, '📱 Рақамни юбориш түймесинен пайдаланың."
+
+#: bot/utils/texts.py:32
+msgid "✋ Assalomu alaykum, Xush kelibsiz!"
+msgstr "✋ Ассалаўма әлейкум, Хош келипсиз!"
+
+#: bot/utils/texts.py:36
+msgid "🏠 <b>Bosh Sahifa</b>"
+msgstr "🏠 <b>Бас Бет</b>"
+
+#: bot/utils/texts.py:40
+msgid ""
+"✅ Rahmat, <b>{name}</b>!\n"
+"\n"
+"📱 Telefon raqamingizni yuborish uchun, iltimos, pastdagi tugmani bosing."
+msgstr ""
+"✅ Рахмет, <b>{name}</b>!\n"
+"\n"
+"📱 Телефон номериңизди жибериў ушын, илтимас, төмендеги түймени басың."
+
+#: bot/utils/texts.py:65
+msgid "👇 Iltimos, tilni tanlang"
+msgstr "👇 Илтимас, тилди таңлаң"
+
+#: bot/utils/texts.py:68
+msgid "❗️ Iltimos, tugmalardan birini tanlang"
+msgstr "❗️ Илтимас, түймелердиң бириси таңлаң"
+
+#: bot/utils/texts.py:71
+msgid "✅ Til muvaffaqiyatli o'zgartirildi"
+msgstr "✅ Тил табыслы өзгертилди"
+
+#: bot/utils/texts.py:74
+msgid "❌ Tilni o'zgartirishda xatolik yuz berdi"
+msgstr "❌ Тилди өзгертиўде қәтелик жүз берди"
+
+#: bot/utils/texts.py:80
+msgid ""
+"👷 <b>Mehnat Muhofazasi</b>\n"
+"\n"
+"👇 <i>Quyidagi bo'limlardan birini tanlang:</i>"
+msgstr ""
+"👷 <b>Мийнетти Қорғаў</b>\n"
+"\n"
+"👇 <i>Төмендеги бөлимлерден бирин таңлаң:</i>"
+
+#: bot/utils/texts.py:83
+msgid ""
+"⚠️ <b>Sanoat Xavfsizligi</b>\n"
+"\n"
+"👇 <i>Quyidagi bo'limlardan birini tanlang:</i>"
+msgstr ""
+"⚠️ <b>Санаат Қәўипсизлиги</b>\n"
+"\n"
+"👇 <i>Төмендеги бөлимлерден бирин таңлаң:</i>"
+
+#: bot/utils/texts.py:89
+msgid ""
+"📂 <b>Hozircha hech qanday Test Bo'limi mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📂 <b>Ҳәзирше ҳеш қандай Тест бөлими жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң.</i>"
+
+#: bot/utils/texts.py:97
+msgid ""
+"🧠 <b>TEST BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"👇 <b>Test Bo'limini tanlang:</b>\n"
+"\n"
+msgstr ""
+"🧠 <b>ТЕСТ БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"👇 <b>Тест Бөлимин таңлаң:</b>\n"
+"\n"
+
+#: bot/utils/texts.py:105
+msgid ""
+"❌ <b>Bu Bo'limda Testlar mavjud emas</b>\n"
+"\n"
+msgstr ""
+"❌ <b>Бул Бөлимде Тестлер жоқ</b>\n"
+"\n"
+
+#: bot/utils/texts.py:109
+msgid ""
+"🎯 <b>Test boshlanmoqda!</b>\n"
+"\n"
+"🔢 Jami savollar: <b>{total}</b> ta\n"
+"⏱ Har bir savolga: <b>60 soniya</b>\n"
+"\n"
+"💡 <i>Tayyor bo'lsangiz, boshlaymiz...</i>"
+msgstr ""
+"🎯 <b>Тест басланбақта!</b>\n"
+"\n"
+"🔢 Жәми сораўлар: <b>{total}</b> дана\n"
+"⏱ Ҳәр бир сораўға: <b>60 секунд</b>\n"
+"\n"
+"💡 <i>Тайяр болсаңыз, баслаймыз...</i>"
+
+#: bot/utils/texts.py:118
+msgid "📝 Savol - {current}/{total}"
+msgstr "📝 Сораў - {current}/{total}"
+
+#: bot/utils/texts.py:122
+msgid "⏳ <i>Qolgan vaqt: <b>{seconds}</b> soniya</i>"
+msgstr "⏳ <i>Қалған ўақыт: <b>{seconds}</b> секунд</i>"
+
+#: bot/utils/texts.py:126
+msgid ""
+"⏰ <b>Vaqt tugadi!</b>\n"
+"\n"
+msgstr ""
+"⏰ <b>Ўақыт тамам болды!</b>\n"
+"\n"
+
+#: bot/utils/texts.py:130
+msgid "📝 <b>Javob variantlari:</b>\n"
+msgstr "📝 <b>Жуўап варианлары:</b>\n"
+
+#: bot/utils/texts.py:134
+msgid ""
+"✅ <b>To'g'ri javob!</b>\n"
+"\n"
+msgstr ""
+"✅ <b>Дурыс жуўап!</b>\n"
+"\n"
+
+#: bot/utils/texts.py:138
+msgid ""
+"❌ <b>Noto'g'ri javob!</b>\n"
+"\n"
+msgstr ""
+"❌ <b>Қәте жуўап!</b>\n"
+"\n"
+
+#: bot/utils/texts.py:142
+msgid "✅ To'g'ri!"
+msgstr "✅ Дурыс!"
+
+#: bot/utils/texts.py:146
+msgid "❌ Noto'g'ri!"
+msgstr "❌ Қәте!"
+
+#: bot/utils/texts.py:150
+msgid "🏁 <b>TEST YAKUNLANDI!</b>\n"
+msgstr "🏁 <b>ТЕСТ ТАМАМЛАНДЫ!</b>\n"
+
+#: bot/utils/texts.py:154
+msgid ""
+"👤 <b>Ishtirokchi: {name}</b>\n"
+"\n"
+msgstr ""
+"👤 <b>Катнасыўшы: {name}</b>\n"
+"\n"
+
+#: bot/utils/texts.py:158
+msgid ""
+"📊 <b>Natija:</b> {correct}/{total}\n"
+"\n"
+msgstr ""
+"📊 <b>Нәтийже:</b> {correct}/{total}\n"
+"\n"
+
+#: bot/utils/texts.py:162
+msgid ""
+"📈 <b>Foiz:</b> <i>{percentage}%</i>\n"
+"\n"
+msgstr ""
+"📈 <b>Пайыз:</b> <i>{percentage}%</i>\n"
+"\n"
+
+#: bot/utils/texts.py:166
+msgid ""
+"<b>Baho: {grade}</b>\n"
+"\n"
+msgstr ""
+"<b>Баҳа: {grade}</b>\n"
+"\n"
+
+#: bot/utils/texts.py:170
+msgid ""
+"✅ To'g'ri javoblar: {correct}\n"
+"\n"
+msgstr ""
+"✅ Дурыс жуўаплар: {correct}\n"
+"\n"
+
+#: bot/utils/texts.py:174
+msgid ""
+"❌ Noto'g'ri javoblar: {incorrect}\n"
+"\n"
+msgstr ""
+"❌ Қәте жуўаплар: {incorrect}\n"
+"\n"
+
+#: bot/utils/texts.py:179
+msgid "A'lo darajada!"
+msgstr "Ең жоқары дәрежеде!"
+
+#: bot/utils/texts.py:183
+msgid "Yaxshi!"
+msgstr "Жақсы!"
+
+#: bot/utils/texts.py:187
+msgid "Qoniqarli!"
+msgstr "Қанаатланарлы!"
+
+#: bot/utils/texts.py:191
+msgid "O'rtacha!"
+msgstr "Орташа!"
+
+#: bot/utils/texts.py:195
+msgid "Qoniqarsiz!"
+msgstr "Қанаатланарсыз"
+
+#: bot/utils/texts.py:200
+msgid "🎊 Ajoyib natija! Siz haqiqiy bilimdon ekansiz!"
+msgstr "🎊 Әжайып нәтийже! Сиз ҳақыйқый билимдан екенсиз!"
+
+#: bot/utils/texts.py:204
+msgid "👏 Yaxshi natija! Biroz ko'proq mashq qilsangiz a'lo bo'ladi!"
+msgstr "👏 Жақсы нәтийже! Бираз көбирек шынығып алсаңыз әжайып болады!"
+
+#: bot/utils/texts.py:208
+msgid "💪 Yaxshi harakat! Davom eting!"
+msgstr "💪 Жақсы ҳәрекет! Даўам етиң!"
+
+#: bot/utils/texts.py:212
+msgid "📖 Yaxshi boshlanish! Ko'proq o'qish kerak!"
+msgstr "📖 Жақсы баслама! Көбирек оқыў керек!"
+
+#: bot/utils/texts.py:216
+msgid "💡 Bilimlaringizni oshirish uchun ko'proq harakat qiling!"
+msgstr "💡 Билимлериңизди асырыў ушын көбирек ҳәрекет етиң!"
+
+#: bot/utils/texts.py:221
+msgid "❌ Noto'g'ri format!"
+msgstr "❌ Дурыс формат емес!"
+
+#: bot/utils/texts.py:225
+msgid "❌ Javob yoki savol topilmadi!"
+msgstr "❌ Жуўап ямаса сораў табылмады!"
+
+#: bot/utils/texts.py:229
+msgid "⏰ Kechikdingiz, vaqt tugagan!"
+msgstr "⏰ Кешиктиңиз, ўақыт таўсылды!"
+
+#: bot/utils/texts.py:233
+msgid ""
+"❌ <b>Xatolik yuz berdi</b>\n"
+"\n"
+"🔄 Iltimos, qaytadan urinib ko'ring."
+msgstr ""
+"❌ <b>Қәтелик жүз берди</b>\n"
+"\n"
+"🔄 Илтимас, қайта урынып көриң."
+
+#: bot/utils/texts.py:240
+msgid "Foydalanuvchi"
+msgstr "Пайдаланыўшы"
+
+#: bot/utils/texts.py:245
+msgid "🏠 <b>Asosiy Menyu</b>"
+msgstr "🏠 <b>Тийкарғы меню</b>"
+
+#: bot/utils/texts.py:252
+msgid ""
+"❌ <b>Hozircha hech qanday Konspekt Bo'limi mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"❌ <b>Ҳәзирше ҳеш қандай Конспект бөлими жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң.</i>"
+
+#: bot/utils/texts.py:261
+msgid ""
+"📚 <b>KONSPEKTLAR BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Kategoriyani tanlang:</b>"
+msgstr ""
+"📚 <b>КОНСПЕКТЛЕР БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Категорияны таңлаң:</b>"
+
+#: bot/utils/texts.py:270
+msgid ""
+"📂 <b>{category_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha bu Bo'limda Konspektlar mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📂 <b>{category_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше бул Бөлимде Конспектлер жоқ</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:281
+msgid ""
+"📂 <b>{category_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📚 <b>Jami konspektlar:</b> <i>{total} ta</i>"
+msgstr ""
+"📂 <b>{category_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📚 <b>Жәми коньспектлер:</b> <i>{total} дана</i>"
+
+#: bot/utils/texts.py:288 bot/utils/texts.py:424 bot/utils/texts.py:561
+#: bot/utils/texts.py:836
+msgid " ┃ 📄 <b>Sahifa:</b> <i>{page}/{total_pages}</i>"
+msgstr " ┃ 📄 <b>Бет:</b> <i>{page}/{total_pages}</i>"
+
+#: bot/utils/texts.py:293
+msgid ""
+"\n"
+"\n"
+"📄 <b>Batafsil ma'lumot uchun konspektni tanlang:</b>"
+msgstr ""
+"\n"
+"\n"
+"📄 <b>Толық мағлыўмат ушын коньспектти таңлаң:</b>"
+
+#: bot/utils/texts.py:304
+msgid ""
+"📄 <b>{file}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📂 <b>Kategoriya:</b> {category}"
+msgstr ""
+"📄 <b>{file}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📂 <b>Категория:</b> {category}"
+
+#: bot/utils/texts.py:311 bot/utils/texts.py:447 bot/utils/texts.py:599
+#: bot/utils/texts.py:876
+msgid ""
+"\n"
+"\n"
+"📝 <b>Tavsif:</b> {desc}"
+msgstr ""
+"\n"
+"\n"
+"📝 <b>Түсиндирме:</b> {desc}"
+
+#: bot/utils/texts.py:313 bot/utils/texts.py:601 bot/utils/texts.py:878
+msgid ""
+"\n"
+"\n"
+"✅ <i>Yuqoridagi faylni ko'rishingiz mumkin</i>"
+msgstr ""
+"\n"
+"\n"
+"✅ <i>Жоқарыдағы файлды көриўиңиз мүмкин</i>"
+
+#: bot/utils/texts.py:320 bot/utils/texts.py:608 bot/utils/texts.py:885
+msgid ""
+"❌ <b>Faylni yuborishda xatolik yuz berdi.</b>\n"
+"\n"
+"🙏 <i>Iltimos, Admin bilan bog'laning yoki qayta urinib ko'ring.</i>"
+msgstr ""
+"❌ <b>Файлды жибериўде қәте жүз берди.</b>\n"
+"\n"
+"🙏 <i>Илтимас, Админ менен байланысың яки қайта урынып көриң.</i>"
+
+#: bot/utils/texts.py:328
+msgid ""
+"📊 <b>KONSPEKTLAR STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📚 <b>Jami konspektlar:</b> <i>{total} ta</i>\n"
+msgstr ""
+"📊 <b>КОНСПЕКТЛЕР СТАТИСТИКАСИ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📚 <b>Жәми коньспектлер:</b> <i>{total} дана</i>\n"
+
+#: bot/utils/texts.py:335 bot/utils/texts.py:471
+msgid "📂 <b>Bo'limlar bo'yicha taqsimot:</b>\n"
+msgstr "📂 <b>Бөлимлер бойынша бөлистириў:</b>\n"
+
+#: bot/utils/texts.py:347
+msgid ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Konspektlar: {count} ta</i>\n"
+msgstr ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Конспектлер: {count} дана</i>\n"
+
+#: bot/utils/texts.py:363
+msgid ""
+"📊 <b>KONSPEKTLAR STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha statistika ma'lumotlari mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi"
+msgstr ""
+"📊 <b>КОНСПЕКТЛЕР СТАТИСТИКАСИ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше статистика мағлыўматлары жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады"
+
+#: bot/utils/texts.py:373 bot/utils/texts.py:509 bot/utils/texts.py:744
+#: bot/utils/texts.py:893
+msgid ""
+"❌ <b>Xatolik yuz berdi.</b>\n"
+"🙏 <i>Iltimos, qayta urinib ko'ring</i>"
+msgstr ""
+"❌ <b>Қәтелик жүз берди.</b>\n"
+"🙏 <i>Илтимас, кайта урынып көриң</i>"
+
+#: bot/utils/texts.py:383
+msgid ""
+"📂 <b>Hozircha hech qanday Video Bo'limi mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📂 <b>Ҳәзирше ҳеш қандай Видео бөлими жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:392
+msgid ""
+"🎬 <b>VIDEO ROLIKLAR BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Kategoriyani tanlang:</b>"
+msgstr ""
+"🎬 <b>ВИДЕО РОЛИКЛЕР БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Категорияны таңлаң:</b>"
+
+#: bot/utils/texts.py:401
+msgid ""
+"📂 <b>{category}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha bu Bo'limda Video Roliklar mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📂 <b>{category}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше бул Бөлимде Видео Роликлер жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:417
+msgid ""
+"📂 <b>{category}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"🎬 <b>Jami videolar:</b> <i>{total} ta</i>"
+msgstr ""
+"📂 <b>{category}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"🎬 <b>Жәми видеолар:</b> <i>{total} дана</i>"
+
+#: bot/utils/texts.py:429
+msgid ""
+"\n"
+"\n"
+"🎥 <b>Batafsil ma'lumot uchun videoni tanlang:</b>"
+msgstr ""
+"\n"
+"\n"
+"🎥 <b>Толық мағлыўмат ушын видеоны таңлаң:</b>"
+
+#: bot/utils/texts.py:440
+msgid ""
+"🎬 <b>{video}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📂 <b>Kategoriya:</b> {category}"
+msgstr ""
+"🎬 <b>{video}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📂 <b>Категория:</b> {category}"
+
+#: bot/utils/texts.py:449
+msgid ""
+"\n"
+"\n"
+"✅ <i>Yuqoridagi videoni ko'rishingiz mumkin</i>"
+msgstr ""
+"\n"
+"\n"
+"✅ <i>Жоқарыдағы видеони көриўиңиз мүмкин</i>"
+
+#: bot/utils/texts.py:456
+msgid ""
+"❌ <b>Videoni yuborishda xatolik yuz berdi.</b>\n"
+"\n"
+"🙏 <i>Iltimos, Admin bilan bog'laning yoki qayta urinib ko'ring.</i>"
+msgstr ""
+"❌ <b>Видеоны жибериўде қәтелик жүз берди.</b>\n"
+"\n"
+"🙏 <i>Илтимас, Админ менен байланысың яки қайта урынып көриң.</i>"
+
+#: bot/utils/texts.py:464
+msgid ""
+"📊 <b>VIDEO MATERIALLAR STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"🎬 <b>Jami videolar:</b> <i>{total} ta</i>\n"
+msgstr ""
+"📊 <b>ВИДЕО МАТЕРИАЛЛАР СТАТИСТИКАСИ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"🎬 <b>Жәми видеолар:</b> <i>{total} дана</i>\n"
+
+#: bot/utils/texts.py:483
+msgid ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Videolar: {count} ta</i>\n"
+msgstr ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Видеолар: {count} ta</i>\n"
+
+#: bot/utils/texts.py:499
+msgid ""
+"📊 <b>VIDEO MATERIALLAR STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha statistika ma'lumotlari mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi"
+msgstr ""
+"📊 <b>VIDEO MATERIALLAR STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше статистика мағлыўматлары жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады"
+
+#: bot/utils/texts.py:535
+msgid ""
+"⚠️ <b>BAXTSIZ HODISALAR BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📆 <b>Quyidagi yillardan birini tanlang:</b>\n"
+"ℹ️ <i>(qavsda shu yildagi malumotlar soni)</i>"
+msgstr ""
+"⚠️ <b>БАХЫЦЫЗ ЎАҚЫЯЛАР БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📆 <b>Төмендеги жыллардан бирин таңлаң.:</b>\n"
+"ℹ️ <i>(қаўсырмада усы жылдағы мағлыўматлар саны)</i>"
+
+#: bot/utils/texts.py:545
+msgid ""
+"❌ <b>Hozircha hech qanday Baxtsiz Hodisa ma'lumotlari mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"❌ <b>Ҳәзирше ҳеш қандай Бахыцыз ҳәдийсе мағлыўматлары жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:554
+msgid ""
+"📆 <b>{year_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"🔢 <b>Jami malumotlar soni:</b> <i>{total} ta</i>"
+msgstr ""
+"📆 <b>{year_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"🔢 <b>Жәми мағлыўматлар саны:</b> <i>{total} дана</i>"
+
+#: bot/utils/texts.py:566
+msgid ""
+"\n"
+"\n"
+"📋 <b>Batafsil ma'lumot uchun tanlang:</b>"
+msgstr ""
+"\n"
+"\n"
+"📋 <b>Толық мағлыўмат ушын таңлаң:</b>"
+
+#: bot/utils/texts.py:573
+msgid ""
+"📆 <b>{year_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha bu bo'limdagi baxtsiz hodisalar ma'lumotlari mavjud "
+"emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📆 <b>{year_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше бул бөлимдеги бахыцыз ҳәдийселер мағлыўматлары бар емес.</b>"
+"\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:590
+msgid ""
+"📋 <b>{title}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📆 <b>Yil:</b> {year}\n"
+"📂 <b>Kategoriya:</b> {category}\n"
+"👁 <b>Ko'rishlar:</b> {views} marta"
+msgstr ""
+"📋 <b>{title}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📆 <b>Жыл:</b> {year}\n"
+"📂 <b>Категория:</b> {category}\n"
+"👁 <b>Көриўлер:</b> {views} marta"
+
+#: bot/utils/texts.py:616
+msgid ""
+"📊 <b>UMUMIY STATISTIKA</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+msgstr ""
+"📊 <b>Улыўма статистика/b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+
+#: bot/utils/texts.py:622
+msgid "📈 <b>Jami Baxtsiz Hodisalar:</b> <i>{total}</i> <b>ta</b>\n"
+msgstr "📈 <b>Жәми бахыцыз ҳәдийселер:</b> <i>{total}</i> <b>дана</b>\n"
+
+#: bot/utils/texts.py:623
+msgid ""
+"ℹ️ <i>(Xisobat hujjatlari hisobga olinmagan)</i>\n"
+"\n"
+msgstr ""
+"ℹ️ <i>(Xisobat ҳүжжетлери есапқа алынбаған)</i>\n"
+"\n"
+
+#: bot/utils/texts.py:627
+msgid "📅 <b>Yillik dinamika:</b>\n"
+msgstr "📅 <b>Жыллық динамика:</b>\n"
+
+#: bot/utils/texts.py:637
+msgid "🔹 <b>{name} - Baxtsiz hodisalar soni:</b> <i>{count}</i> <b>ta</b>"
+msgstr "🔹 <b>{name} - Бахыцыз ҳәдийселер саны:</b> <i>{count}</i> <b>дана</b>"
+
+#: bot/utils/texts.py:659
+msgid ""
+"\n"
+"{emoji} <b>{prev_year} ga Nisbatan:</b>\n"
+"      <i>+{change_abs}</i> <b>taga yani</b> "
+"<i>(+{change_percent:.1f}%)</i> <b>ga oshgan</b>"
+msgstr ""
+"\n"
+"{emoji} <b>{prev_year} ga Салыстырғанда:</b>\n"
+"      <i>+{change_abs}</i> <b>данаға яғный</b> "
+"<i>(+{change_percent:.1f}%)</i> <b>артқан</b>"
+
+#: bot/utils/texts.py:670
+msgid ""
+"\n"
+"{emoji} <b>{prev_year} ga Nisbatan:</b>\n"
+"      <i>{change_abs}</i> <b>taga yani</b> <i>({change_percent:.1f}%)</i>"
+" <b>ga kamaygan</b>"
+msgstr ""
+"\n"
+"{emoji} <b>{prev_year} ga Салыстырғанда:</b>\n"
+"      <i>{change_abs}</i> <b>данаға яғный</b> "
+"<i>({change_percent:.1f}%)</i> <b>азайған</b>"
+
+#: bot/utils/texts.py:681
+msgid ""
+"\n"
+"{emoji} <b>{prev_year} ga Nisbatan o'zgarmagan</b>"
+msgstr ""
+"\n"
+"{emoji} <b>{prev_year} ga Салыстырғанда өзгермеген</b>"
+
+#: bot/utils/texts.py:697
+msgid ""
+"📊 <b>{year_name} STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📈 <b>Jami Baxtsiz Hodisalar soni:</b> <i>{total} ta</i>\n"
+"ℹ️ <i>(Xisobat hujjatlari hisobga olinmagan)</i>\n"
+"\n"
+msgstr ""
+"📊 <b>{year_name} СТАТИСТИКАСЫ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📈 <b>Жәми Бахыцыз Ҳәдийселер саны:</b> <i>{total} дана</i>\n"
+"ℹ️ <i>(Xisobat ҳүжжетлери ҳисапқа алынбаған)</i>\n"
+"\n"
+
+#: bot/utils/texts.py:705
+msgid "📂 <b>Kategoriyalar bo'yicha taqsimot:</b>\n"
+msgstr "📂 <b>Категориялар бойынша бөлистириў:</b>\n"
+
+#: bot/utils/texts.py:716
+msgid ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      Baxtsiz hodisalar soni: <b>{count} ta</b>\n"
+msgstr ""
+"\n"
+"🔹 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      Бахыцыз ҳәдийселер саны: <b>{count} дана</b>\n"
+
+#: bot/utils/texts.py:727
+msgid "❌ <i>Bu yilda baxtsiz hodisalar qayd etilmagan</i>"
+msgstr "❌ <i>Бул жылы бахыцыз ҳәдийселер қайд етилмеген</i>"
+
+#: bot/utils/texts.py:734
+msgid ""
+"📊 <b>UMUMIY STATISTIKA</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha statistika ma'lumotlari mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi"
+msgstr ""
+"📊 <b>УЛЫЎМА СТАТИСТИКА</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше статистика мағлыўматлары жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады"
+
+# ==================== FOLDER PARENT TYPE NAMES ====================
+#: bot/utils/texts.py:762
+msgid "Nizomlar"
+msgstr "НИЗАМЛАР"
+
+#: bot/utils/texts.py:763
+msgid "Himoya Vositalari"
+msgstr "ҚОРҒАНИЎ ҚУРАЛЛАРИ"
+
+#: bot/utils/texts.py:764
+msgid "O'quv Texnik Mashg'ulot"
+msgstr "ОҚЫЎ ТЕХНИКАЛЫҚ ШЫНЫҒЫЎ"
+
+#: bot/utils/texts.py:765
+msgid "Kranlar"
+msgstr "КРАНЛАР"
+
+#: bot/utils/texts.py:766
+msgid "Qozonxonalar"
+msgstr "ҚАЗАНХАНАЛАР"
+
+#: bot/utils/texts.py:767
+msgid "Bosim Ostidagi Ichlovchi Sig'im"
+msgstr "БАСЫМ АСТЫНДА ИСЛЕЙТУҒЫН СЫЙЫМЛЫҚ"
+
+#: bot/utils/texts.py:768
+msgid "To'liq Texnik Ko'rik"
+msgstr "ТОЛЫҚ ТЕХНИКАЛЫҚ КӨРИК"
+
+#: bot/utils/texts.py:793
+msgid ""
+"{emoji} <b>{parent_name} BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Papkani tanlang:</b>\n"
+"ℹ️ <i>(Statistikada batafsil ma'lumot)</i>"
+msgstr ""
+"{emoji} <b>{parent_name} БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"📂 <b>Папканы таңлаң:</b>\n"
+"ℹ️ <i>(Статистикада толық мағлыўмат)</i>"
+
+#: bot/utils/texts.py:809
+msgid ""
+"{emoji} <b>{parent_name} BO'LIMI</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"❌ <b>Hozircha hech qanday papka mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"{emoji} <b>{parent_name}БӨЛИМИ</b>\n"
+"➖➖➖➖➖➖➖➖➖➖➖➖\n"
+"\n"
+"❌ <b>Ҳәзирше ҳеш қандай папка жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:829
+msgid ""
+"📂 <b>{folder_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📄 <b>Jami fayllar:</b> <i>{total} ta</i>"
+msgstr ""
+"📂 <b>{folder_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"📄 <b>Жәми файллар:</b> <i>{total} ta</i>"
+
+#: bot/utils/texts.py:841
+msgid ""
+"\n"
+"\n"
+"📋 <b>Batafsil ma'lumot uchun faylni tanlang:</b>"
+msgstr ""
+"\n"
+"\n"
+"📋 <b>Толық мағлыўмат ушын файлды таңлаң:</b>"
+
+#: bot/utils/texts.py:848
+msgid ""
+"📂 <b>{folder_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha bu papkada fayllar mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi\n"
+"\n"
+"🙏 <i>Iltimos, keyinroq qayta urinib ko'ring</i>"
+msgstr ""
+"📂 <b>{folder_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше бул папкада файллар жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады\n"
+"\n"
+"🙏 <i>Илтимас, кейинирек қайта урынып көриң</i>"
+
+#: bot/utils/texts.py:864
+msgid ""
+"📄 <b>{file_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📂 <b>Papka:</b> {folder_name}\n"
+"👁 <b>Ko'rishlar:</b> {views} marta"
+msgstr ""
+"📄 <b>{file_name}</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📂 <b>Папка:</b> {folder_name}\n"
+"👁 <b>Көриўлер:</b> {views} мәрте"
+
+#: bot/utils/texts.py:909
+msgid ""
+"{emoji} <b>{parent_name} STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📂 <b>Jami papkalar:</b> <i>{total_folders} ta</i>\n"
+"📄 <b>Jami fayllar:</b> <i>{total_files} ta</i>\n"
+"\n"
+msgstr ""
+"{emoji} <b>{parent_name} СТАТИСТИКАСЫ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"📂 <b>Жәми папкалар:</b> <i>{total_folders} дана</i>\n"
+"📄 <b>Жәми файллар:</b> <i>{total_files} дана</i>\n"
+"\n"
+
+#: bot/utils/texts.py:924
+msgid "📊 <b>Papkalar bo'yicha:</b>\n"
+msgstr "📊 <b>Папкалар бойынша:</b>\n"
+
+#: bot/utils/texts.py:933
+msgid ""
+"\n"
+"📂 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Fayllar: {count} ta</i>\n"
+msgstr ""
+"\n"
+"📂 <b>{name}</b>\n"
+"      {progress} {percentage:.1f}%\n"
+"      <i>Файллар: {count} дана</i>\n"
+
+#: bot/utils/texts.py:944
+msgid "❌ <i>Bu bo'limda hozircha fayllar mavjud emas</i>"
+msgstr "❌ <i>Бул бөлимде ҳәзирше файллар жоқ</i>"
+
+#: bot/utils/texts.py:953
+msgid ""
+"{emoji} <b>{parent_name} STATISTIKASI</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Hozircha statistika ma'lumotlari mavjud emas.</b>\n"
+"📥 Tez orada ma'lumotlar qo'shiladi"
+msgstr ""
+"{emoji} <b>{parent_name} СТАТИСТИКАСЫ</b>\n"
+"━━━━━━━━━━━━━━━━━━━━\n"
+"\n"
+"❌ <b>Ҳәзирше статистика мағлыўматлары жоқ.</b>\n"
+"📥 Тез арада мағлыўматлар қосылады"
+
+#~ msgid ""
+#~ "📚 <b>KONSPEKTLAR KATEGORIYALARI</b>\n"
+#~ "━━━━━━━━━━━━━━━━━━━━\n"
+#~ "\n"
+#~ "📂 <b>Kategoriyani tanlang:</b>"
+#~ msgstr ""
+#~ "📚 <b>КОНСПЕКТЛЕР КАТЕГОРИЯЛАРЫ</b>\n"
+#~ "━━━━━━━━━━━━━━━━━━━━\n"
+#~ "\n"
+#~ "📂 <b>Категорияны таңлаң:</b>"
+

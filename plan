@@ -1,0 +1,67 @@
+bot/handlers/
+├── __init__.py
+├── start_handler.py           # Start, help
+├── language_handler.py        # Til o'zgartirish
+├── group_events.py            # Guruh eventlari
+├── media_handler.py           # Media file_id
+├── text_handler.py            # Oddiy textlar
+│
+├── common/                    # ✅ UMUMIY HANDLERLAR (MM + SX)
+│   ├── __init__.py
+│   ├── test_handler.py        # MM + SX testlari
+│   ├── conspect_handler.py    # MM + SX konspektlari
+│   └── video_handler.py       # MM + SX videolari
+│
+├── mm/                        # 👷 MEHNAT MUHOFAZASI
+│   ├── __init__.py
+│   ├── mm_main_handler.py     # MM asosiy menyu
+│   ├── mm_nizom_handler.py    # MM nizomlar
+│   ├── mm_himoya_handler.py   # MM himoya vositalari
+│   ├── mm_accident_handler.py # MM baxtsiz hodisalar
+│   └── mm_training_handler.py # MM o'quv texnik mashg'ulot
+│
+└── sx/                        # ⚠️ SANOAT XAVFSIZLIGI
+    ├── __init__.py
+    ├── sx_main_handler.py     # SX asosiy menyu
+    ├── sx_boiler_handler.py   # SX qozonxonalar
+    ├── sx_crane_handler.py    # SX kranlar
+    ├── sx_pressure_handler.py # SX bosim idishlari
+    └── sx_pto_handler.py      # SX PTO UZD
+
+
+
+web/
+├── __init__.py
+├── app.py                    ✅ YANGI
+├── config.py                 ✅ YANGILANDI
+├── routes/                   ✅ YANGI
+│   ├── __init__.py
+│   ├── auth.py              ✅ YANGI
+│   ├── dashboard.py         ✅ YANGI
+│   ├── folder.py            (keyingi)
+│   ├── file.py              (keyingi)
+│   ├── accident.py          (keyingi)
+│   ├── conspect.py          (keyingi)
+│   ├── video.py             (keyingi)
+│   └── test.py              (keyingi)
+├── templates/
+│   ├── base.html            (keyingi - sidebar, navbar)
+│   ├── auth/
+│   │   └── login.html       (keyingi - yangilangan)
+│   ├── dashboard/
+│   │   └── index.html       (keyingi - yangilangan)
+│   └── errors/
+│       ├── 404.html         (keyingi)
+│       └── 500.html         (keyingi)
+├── static/                   ✅ MAVJUD
+│   ├── css/
+│   ├── js/
+│   └── img/
+└── utils/
+    └── db_utils.py          (keyingi)
+
+
+TELEGRAM XABARNOMA (KEYINROQ):
+0 2 * * * cd /home/alisher/PycharmProjects/RJUTBBOT && /home/alisher/PycharmProjects/RJUTBBOT/.venv/bin/python /home/alisher/PycharmProjects/RJUTBBOT/cleanup_monthly.py >> /home/alisher/PycharmProjects/RJUTBBOT/logs/cleanup.log 2>&1
+SERVER'DA CRON JOB SOZLASH:
+crontab -e

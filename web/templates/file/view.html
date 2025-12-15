@@ -1,0 +1,299 @@
+<!-- web/templates/file/view.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ file.name }} - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('file.list') }}">Fayllar</a>
+<span>/</span>
+<span class="current">{{ file.name }}</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .view-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .view-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .view-title {
+        flex: 1;
+    }
+
+    .view-title h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        word-break: break-word;
+    }
+
+    .view-title .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-mm {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .badge-sx {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .view-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .info-card h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: #f8fafc;
+        font-size: 1.05rem;
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    .file-id-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        word-break: break-all;
+        line-height: 1.6;
+    }
+
+    .folder-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 8px;
+        color: #6366f1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .folder-link:hover {
+        background: rgba(99, 102, 241, 0.2);
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .view-header {
+            flex-direction: column;
+        }
+
+        .view-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .btn {
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="view-container">
+    <!-- Header -->
+    <div class="view-header">
+        <div class="view-title">
+            <h1>
+                <i class="fas fa-file-alt"></i>
+                <span>{{ file.name }}</span>
+            </h1>
+            {% if file.folder %}
+            <span class="badge badge-{{ file.folder.section|lower }}">
+                {{ file.folder.section }}
+            </span>
+            {% endif %}
+        </div>
+
+        <div class="view-actions">
+            <a href="{{ url_for('file.edit', id=file.id) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i>
+                <span>Tahrirlash</span>
+            </a>
+            <a href="{{ url_for('file.list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                <span>Orqaga</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Info Card -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-info-circle"></i>
+            <span>Fayl Ma'lumotlari</span>
+        </h2>
+
+        <div class="info-grid">
+            <!-- ID -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-hashtag"></i> ID
+                </div>
+                <div class="info-value">#{{ file.id }}</div>
+            </div>
+
+            <!-- Papka -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-folder"></i> Papka
+                </div>
+                <div class="info-value">
+                    {% if file.folder %}
+                    <a href="{{ url_for('folder.view', id=file.folder.id) }}" class="folder-link">
+                        <i class="fas fa-folder-open"></i>
+                        <span>{{ file.folder.name }}</span>
+                    </a>
+                    {% else %}
+                    <span style="color: #64748b;">Papka tanlanmagan</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tartib -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-sort-numeric-down"></i> Tartib Raqami
+                </div>
+                <div class="info-value">{{ file.order_index }}</div>
+            </div>
+
+            <!-- Yaratilgan -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-calendar-plus"></i> Yaratilgan
+                </div>
+                <div class="info-value">
+                    {% if file.created_at %}
+                    {{ file.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Telegram File ID -->
+    <div class="info-card">
+        <h2>
+            <i class="fab fa-telegram"></i>
+            <span>Telegram File ID</span>
+        </h2>
+        <div class="file-id-box">
+            {{ file.file_id }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,193 @@
+<!-- web/templates/accident/years.html -->
+{% extends 'base.html' %}
+
+{% block title %}Yillar - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<span class="current">Yillar</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .years-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .year-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 25px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .year-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+
+    .year-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .year-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 15px;
+    }
+
+    .year-stats {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #94a3b8;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .year-stats i {
+        color: #f59e0b;
+    }
+
+    .year-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-sm {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+    }
+
+    .btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        flex: 1;
+    }
+
+    .btn-delete:hover {
+        background: rgba(239, 68, 68, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #64748b;
+    }
+
+    .empty-state i {
+        font-size: 5rem;
+        margin-bottom: 25px;
+        opacity: 0.3;
+    }
+
+    .empty-state h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #94a3b8;
+    }
+</style>
+
+<div class="page-header">
+    <h1>
+        <i class="fas fa-calendar-alt"></i>
+        <span>Yillar</span>
+    </h1>
+    <a href="{{ url_for('accident.years_create') }}" class="btn-primary">
+        <i class="fas fa-plus"></i>
+        <span>Yangi Yil</span>
+    </a>
+</div>
+
+{% if years %}
+<div class="years-grid">
+    {% for year in years %}
+    <div class="year-card">
+        <div class="year-number">{{ year.name }}</div>
+        <div class="year-stats">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>{{ year.accidents_count }} ta hodisa</span>
+        </div>
+        <div class="year-actions">
+            <form method="POST" action="{{ url_for('accident.years_delete', id=year.id) }}" style="flex: 1;" onsubmit="return confirm('Rostdan ham o\'chirmoqchimisiz?');">
+                <button type="submit" class="btn-sm btn-delete">
+                    <i class="fas fa-trash"></i>
+                    <span>O'chirish</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-calendar-times"></i>
+    <h3>Yillar mavjud emas</h3>
+    <p>Yangi yil qo'shish uchun yuqoridagi tugmani bosing</p>
+</div>
+{% endif %}
+{% endblock %}

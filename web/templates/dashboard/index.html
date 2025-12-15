@@ -1,0 +1,1104 @@
+<!-- web/templates/dashboard/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Bosh Sahifa - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+{% endblock %}
+
+{% block content %}
+<style>
+    /* Page Header */
+    .page-header {
+        margin-bottom: 30px;
+        padding: 25px 30px;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .page-header p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .header-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Stats Grid - 4 TADAN */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        transition: height 0.3s ease;
+    }
+
+    .stat-card.blue::before { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+    .stat-card.purple::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+    .stat-card.orange::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .stat-card.green::before { background: linear-gradient(90deg, #10b981, #059669); }
+    .stat-card.red::before { background: linear-gradient(90deg, #ef4444, #dc2626); }
+    .stat-card.pink::before { background: linear-gradient(90deg, #ec4899, #db2777); }
+    .stat-card.cyan::before { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+    .stat-card.indigo::before { background: linear-gradient(90deg, #6366f1, #4f46e5); }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(99, 102, 241, 0.25);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .stat-card:hover::before {
+        height: 100%;
+        opacity: 0.05;
+    }
+
+    .stat-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+
+    .stat-card.blue .stat-icon {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+    }
+
+    .stat-card.purple .stat-icon {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+    }
+
+    .stat-card.orange .stat-icon {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+    }
+
+    .stat-card.green .stat-icon {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+    }
+
+    .stat-card.red .stat-icon {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+
+    .stat-card.pink .stat-icon {
+        background: rgba(236, 72, 153, 0.15);
+        color: #ec4899;
+    }
+
+    .stat-card.cyan .stat-icon {
+        background: rgba(6, 182, 212, 0.15);
+        color: #06b6d4;
+    }
+
+    .stat-card.indigo .stat-icon {
+        background: rgba(99, 102, 241, 0.15);
+        color: #6366f1;
+    }
+
+    .stat-info {
+        flex: 1;
+    }
+
+    .stat-info h3 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 6px;
+        line-height: 1;
+    }
+
+    .stat-info p {
+        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 40px;
+    }
+
+    .quick-actions h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 12px;
+        color: #6366f1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .action-btn:hover {
+        background: rgba(99, 102, 241, 0.15);
+        transform: translateX(5px);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+    }
+
+    .action-btn i {
+        font-size: 1.3rem;
+    }
+
+    /* Charts Section */
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+
+    .chart-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .chart-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+    }
+
+    .chart-card.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .chart-card h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .chart-card h3 i {
+        color: #6366f1;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 320px;
+    }
+
+    @media (max-width: 1400px) {
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .actions-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .actions-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid,
+        .actions-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="page-header">
+    <h1>
+        <span>👋</span>
+        <span>Xush kelibsiz, Admin!</span>
+    </h1>
+    <p>
+        <span class="header-item">
+            <i class="fas fa-calendar"></i>
+            {{ now.strftime('%Y-%m-%d %H:%M') }}
+        </span>
+        <span class="header-item">
+            <i class="fas fa-bullseye"></i>
+            Tizim boshqaruvi
+        </span>
+    </p>
+</div>
+
+<!-- Statistics Grid (12 ta - 4 tadan 3 qatorda) -->
+<div class="stats-grid">
+    <!-- 1. Foydalanuvchilar -->
+    <div class="stat-card indigo">
+        <div class="stat-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ user_count }}</h3>
+            <p>Foydalanuvchilar</p>
+        </div>
+    </div>
+
+    <!-- 2. Papkalar -->
+    <div class="stat-card blue">
+        <div class="stat-icon">
+            <i class="fas fa-folder"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ folder_count }}</h3>
+            <p>Papkalar</p>
+        </div>
+    </div>
+
+    <!-- 3. Fayllar -->
+    <div class="stat-card purple">
+        <div class="stat-icon">
+            <i class="fas fa-file"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ file_count }}</h3>
+            <p>Fayllar</p>
+        </div>
+    </div>
+
+    <!-- 4. BH Yillar -->
+    <div class="stat-card orange">
+        <div class="stat-icon">
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ accident_years_count }}</h3>
+            <p>BH Yillar</p>
+        </div>
+    </div>
+
+    <!-- 5. BH Kategoriyalari -->
+    <div class="stat-card red">
+        <div class="stat-icon">
+            <i class="fas fa-tags"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ accident_categories_count }}</h3>
+            <p>BH Kategoriyalari</p>
+        </div>
+    </div>
+
+    <!-- 6. Baxtsiz Hodisalar -->
+    <div class="stat-card red">
+        <div class="stat-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ accident_count }}</h3>
+            <p>Baxtsiz Hodisalar</p>
+        </div>
+    </div>
+
+    <!-- 7. Konspekt Kategoriyalari -->
+    <div class="stat-card cyan">
+        <div class="stat-icon">
+            <i class="fas fa-layer-group"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ conspect_categories_count }}</h3>
+            <p>Konspekt Kategoriyalari</p>
+        </div>
+    </div>
+
+    <!-- 8. Konspektlar -->
+    <div class="stat-card cyan">
+        <div class="stat-icon">
+            <i class="fas fa-book"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ conspect_count }}</h3>
+            <p>Konspektlar</p>
+        </div>
+    </div>
+
+    <!-- 9. Video Kategoriyalari -->
+    <div class="stat-card pink">
+        <div class="stat-icon">
+            <i class="fas fa-list"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ video_categories_count }}</h3>
+            <p>Video Kategoriyalari</p>
+        </div>
+    </div>
+
+    <!-- 10. Videolar -->
+    <div class="stat-card pink">
+        <div class="stat-icon">
+            <i class="fas fa-video"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ video_count }}</h3>
+            <p>Videolar</p>
+        </div>
+    </div>
+
+    <!-- 11. Test Kategoriyalari -->
+    <div class="stat-card green">
+        <div class="stat-icon">
+            <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ test_categories_count }}</h3>
+            <p>Test Kategoriyalari</p>
+        </div>
+    </div>
+
+    <!-- 12. Test Savollari -->
+    <div class="stat-card green">
+        <div class="stat-icon">
+            <i class="fas fa-question-circle"></i>
+        </div>
+        <div class="stat-info">
+            <h3>{{ test_count }}</h3>
+            <p>Test Savollari</p>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions (8 ta tugma) -->
+<div class="quick-actions">
+    <h3>
+        <i class="fas fa-bolt"></i>
+        <span>Tez Harakatlar</span>
+    </h3>
+    <div class="actions-grid">
+        <a href="{{ url_for('folder.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi Papka</span>
+        </a>
+
+        <a href="{{ url_for('file.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi Fayl</span>
+        </a>
+
+        <a href="{{ url_for('accident.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi (BH) Hodisa</span>
+        </a>
+
+        <a href="{{ url_for('accident.categories_create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi (BH) Kategoriya</span>
+        </a>
+
+        <a href="{{ url_for('accident.years_create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi (BH) Yil</span>
+        </a>
+
+        <a href="{{ url_for('conspect.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi Konspekt</span>
+        </a>
+
+        <a href="{{ url_for('video.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi Video</span>
+        </a>
+
+        <a href="{{ url_for('test.create') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Yangi Test</span>
+        </a>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<h2 class="section-title">
+    <i class="fas fa-chart-line"></i>
+    <span>Statistika va Tahlil</span>
+</h2>
+
+<!-- Row 1: Oylik Faollik - UMUMIY (FULL WIDTH) ✅ VARIANT C -->
+<div class="charts-grid">
+    <div class="chart-card full-width">
+        <h3>
+            <i class="fas fa-chart-bar"></i>
+            <span>Oylik Faollik (Umumiy)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="activityChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Row 2: Papkalar Bo'yicha - BATAFSIL (FULL WIDTH) ✅ VARIANT C -->
+<div class="charts-grid">
+    <div class="chart-card full-width">
+        <h3>
+            <i class="fas fa-folder-open"></i>
+            <span>Papkalar Bo'yicha Faollik (Batafsil)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="folderChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Row 3: Bo'limlar (2 ta Doughnut) -->
+<div class="charts-grid">
+    <!-- Bo'limlar - Jami Harakatlar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-chart-pie"></i>
+            <span>Bo'limlar (Jami Harakatlar)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="sectionChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Bo'limlar - Unique Foydalanuvchilar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-user-friends"></i>
+            <span>Bo'limlar (Faol Foydalanuvchilar)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="sectionUniqueChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Row 4: Kunlik 7 kun (FULL WIDTH) -->
+<div class="charts-grid">
+    <div class="chart-card full-width">
+        <h3>
+            <i class="fas fa-chart-line"></i>
+            <span>Kunlik Faol Foydalanuvchilar (7 kun)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="dailyChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Row 5: Test va Konspekt (2 ta) -->
+<div class="charts-grid">
+    <!-- MM vs SX Testlar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-clipboard-check"></i>
+            <span>Test Savollari (MM vs SX)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="testComparisonChart"></canvas>
+        </div>
+    </div>
+
+    <!-- MM vs SX Konspektlar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-book"></i>
+            <span>Konspektlar (MM vs SX)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="conspectComparisonChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Row 6: Hodisalar va Videolar (2 ta) -->
+<div class="charts-grid">
+    <!-- Eng Ko'p Ko'rilgan Hodisalar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Eng Ko'p Ko'rilgan Hodisalar</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="topAccidentsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- MM vs SX Videolar -->
+    <div class="chart-card">
+        <h3>
+            <i class="fas fa-video"></i>
+            <span>Videolar (MM vs SX)</span>
+        </h3>
+        <div class="chart-container">
+            <canvas id="videoComparisonChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+    // Common options
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#94a3b8',
+                    font: {
+                        size: 13,
+                        family: 'Inter, sans-serif',
+                        weight: '500'
+                    },
+                    padding: 15
+                }
+            }
+        }
+    };
+
+    const gridColor = 'rgba(99, 102, 241, 0.1)';
+    const tickColor = '#94a3b8';
+
+    // 1. OYLIK FAOLLIK - UMUMIY (Bar - Vertical) ✅ VARIANT C
+    new Chart(document.getElementById('activityChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ activity_labels|safe }},
+            datasets: [{
+                label: 'Faollik Soni',
+                data: {{ activity_counts|safe }},
+                backgroundColor: [
+                    'rgba(99, 102, 241, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
+                    'rgba(236, 72, 153, 0.8)',
+                    'rgba(6, 182, 212, 0.8)',
+                    'rgba(239, 68, 68, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(99, 102, 241)',
+                    'rgb(139, 92, 246)',
+                    'rgb(236, 72, 153)',
+                    'rgb(6, 182, 212)',
+                    'rgb(239, 68, 68)'
+                ],
+                borderWidth: 2,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // 2. PAPKALAR BO'YICHA - BATAFSIL (Horizontal Bar) ✅ VARIANT C
+    new Chart(document.getElementById('folderChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ folder_labels|safe }},
+            datasets: [{
+                label: 'Ochilganlar Soni',
+                data: {{ folder_counts|safe }},
+                backgroundColor: [
+                    'rgba(99, 102, 241, 0.8)',
+                    'rgba(139, 92, 246, 0.8)',
+                    'rgba(59, 130, 246, 0.8)',
+                    'rgba(236, 72, 153, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(6, 182, 212, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(99, 102, 241)',
+                    'rgb(139, 92, 246)',
+                    'rgb(59, 130, 246)',
+                    'rgb(236, 72, 153)',
+                    'rgb(245, 158, 11)',
+                    'rgb(16, 185, 129)',
+                    'rgb(6, 182, 212)'
+                ],
+                borderWidth: 2,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            ...commonOptions,
+            indexAxis: 'y',
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // 3. BO'LIMLAR - JAMI HARAKATLAR (Doughnut)
+    new Chart(document.getElementById('sectionChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ section_labels|safe }},
+            datasets: [{
+                data: {{ section_counts|safe }},
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.8)',
+                    'rgba(139, 92, 246, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(59, 130, 246)',
+                    'rgb(139, 92, 246)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                            return `${label}: ${value} ta (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 4. BO'LIMLAR - UNIQUE FOYDALANUVCHILAR (Doughnut)
+    new Chart(document.getElementById('sectionUniqueChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ section_unique_labels|safe }},
+            datasets: [{
+                data: {{ section_unique_counts|safe }},
+                backgroundColor: [
+                    'rgba(236, 72, 153, 0.8)',
+                    'rgba(245, 158, 11, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(236, 72, 153)',
+                    'rgb(245, 158, 11)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                            return `${label}: ${value} odam (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 5. KUNLIK FAOL FOYDALANUVCHILAR (Line)
+    new Chart(document.getElementById('dailyChart'), {
+        type: 'line',
+        data: {
+            labels: {{ daily_labels|safe }},
+            datasets: [{
+                label: 'Faol Foydalanuvchilar',
+                data: {{ daily_counts|safe }},
+                borderColor: 'rgb(99, 102, 241)',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'rgb(99, 102, 241)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 3,
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        color: 'rgba(99, 102, 241, 0.05)'
+                    }
+                }
+            }
+        }
+    });
+
+    // 6. TEST SAVOLLARI (MM vs SX) - Bar
+    new Chart(document.getElementById('testComparisonChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ test_comparison_labels|safe }},
+            datasets: [{
+                label: 'Test Soni',
+                data: {{ test_comparison_counts|safe }},
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.8)',
+                    'rgba(139, 92, 246, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(59, 130, 246)',
+                    'rgb(139, 92, 246)'
+                ],
+                borderWidth: 2,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // 7. KONSPEKTLAR (MM vs SX) - Bar
+    new Chart(document.getElementById('conspectComparisonChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ conspect_comparison_labels|safe }},
+            datasets: [{
+                label: 'Konspekt Soni',
+                data: {{ conspect_comparison_counts|safe }},
+                backgroundColor: [
+                    'rgba(6, 182, 212, 0.8)',
+                    'rgba(236, 72, 153, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(6, 182, 212)',
+                    'rgb(236, 72, 153)'
+                ],
+                borderWidth: 2,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // 8. ENG KO'P KO'RILGAN HODISALAR (Horizontal Bar)
+    new Chart(document.getElementById('topAccidentsChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ top_accidents_labels|safe }},
+            datasets: [{
+                label: 'Ko\'rishlar',
+                data: {{ top_accidents_counts|safe }},
+                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                borderColor: 'rgb(239, 68, 68)',
+                borderWidth: 2,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            ...commonOptions,
+            indexAxis: 'y',
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: tickColor,
+                        stepSize: 1,
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: tickColor
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // 9. VIDEOLAR (MM vs SX) - Pie
+    new Chart(document.getElementById('videoComparisonChart'), {
+        type: 'pie',
+        data: {
+            labels: {{ video_comparison_labels|safe }},
+            datasets: [{
+                data: {{ video_comparison_counts|safe }},
+                backgroundColor: [
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(245, 158, 11, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(16, 185, 129)',
+                    'rgb(245, 158, 11)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

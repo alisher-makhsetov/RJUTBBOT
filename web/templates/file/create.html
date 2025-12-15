@@ -1,0 +1,354 @@
+<!-- web/templates/file/create.html -->
+{% extends 'base.html' %}
+
+{% block title %}Yangi Fayl - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('file.list') }}">Fayllar</a>
+<span>/</span>
+<span class="current">Yangi</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-header {
+        margin-bottom: 35px;
+    }
+
+    .form-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .form-header p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #f8fafc;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-group label .required {
+        color: #ef4444;
+        margin-left: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 10px;
+        color: #f8fafc;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+        font-family: 'Courier New', monospace;
+    }
+
+    .form-help {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h1>
+                <i class="fas fa-file-upload"></i>
+                <span>Yangi Fayl Qo'shish</span>
+            </h1>
+            <p>Yangi fayl ma'lumotlarini kiriting</p>
+        </div>
+
+        <form method="POST">
+            <!-- Fayl Nomi -->
+            <div class="form-group">
+                <label for="name">
+                    Fayl Nomi
+                    <span class="required">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Masalan: Elektr xavfsizligi qoidalari.pdf"
+                    required
+                    autofocus
+                >
+                <p class="form-help">Faylning to'liq nomini kiriting (kengaytma bilan)</p>
+            </div>
+
+            <!-- Telegram File ID -->
+            <div class="form-group">
+                <label for="file_id">
+                    Telegram File ID
+                    <span class="required">*</span>
+                </label>
+                <textarea
+                    id="file_id"
+                    name="file_id"
+                    placeholder="BQACAgIAAxkBAAIC..."
+                    required
+                    rows="3"
+                ></textarea>
+                <p class="form-help">Telegram bot orqali yuklangan faylning ID'si</p>
+            </div>
+
+            <!-- Bo'lim, Turi, Papka - 3 bosqichli -->
+            <div class="form-row">
+                <!-- 1. Bo'lim -->
+                <div class="form-group">
+                    <label for="section">
+                        Bo'lim
+                        <span class="required">*</span>
+                    </label>
+                    <select id="section" name="section" required>
+                        <option value="">1. Bo'lim tanlang</option>
+                        <option value="MM">MM - Mehnat Muhofazasi</option>
+                        <option value="SX">SX - Sanoat Xavfsizligi</option>
+                    </select>
+                </div>
+
+                <!-- 2. Turi -->
+                <div class="form-group">
+                    <label for="parent_type">
+                        Papka Turi
+                        <span class="required">*</span>
+                    </label>
+                    <select id="parent_type" name="parent_type" disabled required>
+                        <option value="">2. Avval bo'lim tanlang</option>
+                    </select>
+                </div>
+
+                <!-- 3. Papka -->
+                <div class="form-group">
+                    <label for="folder_id">
+                        Papka
+                        <span class="required">*</span>
+                    </label>
+                    <select id="folder_id" name="folder_id" disabled required>
+                        <option value="">3. Avval turi tanlang</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tartib Raqami -->
+            <div class="form-group">
+                <label for="order_index">Tartib Raqami</label>
+                <input
+                    type="number"
+                    id="order_index"
+                    name="order_index"
+                    placeholder="0"
+                    value="0"
+                    min="0"
+                >
+                <p class="form-help">Fayllarni tartiblash uchun (kichik raqam birinchi)</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Saqlash</span>
+                </button>
+                <a href="{{ url_for('file.list') }}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    <span>Bekor qilish</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Papka turlari - Bo'limga qarab
+    const folderTypes = {
+        'MM': [
+            { value: 'himoya_vositalari', text: "🦺 Himoya Vositalari" },
+            { value: 'nizomlar', text: "📋 Nizomlar" },
+            { value: 'oquv_texnik', text: "🎓 O'quv Texnik Mashg'ulot" },
+        ],
+        'SX': [
+            { value: 'kranlar', text: "🏗️ Kranlar" },
+            { value: 'qozonxonalar', text: "🏭 Qozonxonalar" },
+            { value: 'bosim_idishlari', text: "⚙️ Bosim Ostidagi Ichlovchi Sig'im" },
+            { value: 'toliq_texnik', text: "🛠️ To‘liq Kexnik Ko‘rik" }
+        ]
+    };
+
+    // Backend'dan kelgan papkalar (JSON format)
+    const allFolders = {{ folders | tojson }};
+
+    const sectionSelect = document.getElementById('section');
+    const parentTypeSelect = document.getElementById('parent_type');
+    const folderSelect = document.getElementById('folder_id');
+
+    // 1. Bo'lim o'zgarganda - Turlarni ko'rsat
+    sectionSelect.addEventListener('change', function() {
+        const section = this.value;
+
+        // Reset parent_type va folder
+        parentTypeSelect.innerHTML = '<option value="">2. Turi tanlang</option>';
+        folderSelect.innerHTML = '<option value="">3. Avval turi tanlang</option>';
+        folderSelect.disabled = true;
+
+        if (section && folderTypes[section]) {
+            // Turlarni qo'sh
+            folderTypes[section].forEach(type => {
+                const option = document.createElement('option');
+                option.value = type.value;
+                option.textContent = type.text;
+                parentTypeSelect.appendChild(option);
+            });
+
+            parentTypeSelect.disabled = false;
+        } else {
+            parentTypeSelect.disabled = true;
+        }
+    });
+
+    // 2. Turi o'zgarganda - Papkalarni ko'rsat
+    parentTypeSelect.addEventListener('change', function() {
+        const section = sectionSelect.value;
+        const parentType = this.value;
+
+        // Reset folder
+        folderSelect.innerHTML = '<option value="">3. Papka tanlang</option>';
+
+        if (section && parentType) {
+            // Filter papkalar by section va parent_type
+            const filteredFolders = allFolders.filter(folder =>
+                folder.section === section && folder.parent_type === parentType
+            );
+
+            if (filteredFolders.length > 0) {
+                filteredFolders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = folder.name;
+                    folderSelect.appendChild(option);
+                });
+
+                folderSelect.disabled = false;
+            } else {
+                folderSelect.innerHTML = '<option value="">Bu turda papka yo\'q</option>';
+                folderSelect.disabled = true;
+            }
+        } else {
+            folderSelect.disabled = true;
+        }
+    });
+</script>
+{% endblock %}

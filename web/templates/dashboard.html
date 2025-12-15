@@ -1,0 +1,443 @@
+<!-- web/templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RJUTB Admin</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+
+    <style>
+        /* Additional inline styles for dashboard */
+        body {
+            background: #0a0e27;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Animated Background */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+            animation-duration: 20s;
+        }
+
+        .shape:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 10s;
+            animation-duration: 30s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            25% {
+                transform: translateY(-50px) translateX(30px) scale(1.1);
+            }
+            50% {
+                transform: translateY(-20px) translateX(-30px) scale(0.9);
+            }
+            75% {
+                transform: translateY(30px) translateX(20px) scale(1.05);
+            }
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-scroll 30s linear infinite;
+        }
+
+        @keyframes grid-scroll {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        /* Gradient orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: pulse-orb 10s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #6366f1, transparent);
+            top: -200px;
+            right: -200px;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8b5cf6, transparent);
+            bottom: -300px;
+            left: -300px;
+            animation-delay: 5s;
+        }
+
+        @keyframes pulse-orb {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.25;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-decoration">
+        <div class="grid-bg"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Back to Admin Link -->
+        <a href="/admin/" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            <span>Admin Panelga qaytish</span>
+        </a>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>👋 Xush kelibsiz, Admin!</h1>
+            <p>📅 {{ last_update }} | 🎯 Tizim boshqaruvi</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <!-- Folders -->
+            <div class="stat-card blue">
+                <div class="stat-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="counter" data-target="{{ folder_count }}">0</h3>
+                    <p>Jami Papkalar</p>
+                </div>
+            </div>
+
+            <!-- Files -->
+            <div class="stat-card purple">
+                <div class="stat-icon">
+                    <i class="fas fa-file"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="counter" data-target="{{ file_count }}">0</h3>
+                    <p>Jami Fayllar</p>
+                </div>
+            </div>
+
+            <!-- Accidents -->
+            <div class="stat-card orange">
+                <div class="stat-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="counter" data-target="{{ accident_count }}">0</h3>
+                    <p>Baxtsiz Hodisalar</p>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div class="stat-card green">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="counter" data-target="{{ user_count }}">0</h3>
+                    <p>Foydalanuvchilar</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+            <!-- Activity Chart -->
+            <div class="chart-card">
+                <h3>
+                    <i class="fas fa-chart-line"></i>
+                    Haftalik Faollik
+                </h3>
+                <canvas id="activityChart"></canvas>
+            </div>
+
+            <!-- Distribution Chart -->
+            <div class="chart-card">
+                <h3>
+                    <i class="fas fa-chart-pie"></i>
+                    Bo'limlar Taqsimoti
+                </h3>
+                <canvas id="distributionChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>
+                <i class="fas fa-bolt"></i>
+                Tez Harakatlar
+            </h3>
+            <div class="actions-grid">
+                <a href="/admin/folder/create" class="action-btn">
+                    <i class="fas fa-folder-plus"></i>
+                    <span>Yangi Papka</span>
+                </a>
+                <a href="/admin/file/create" class="action-btn">
+                    <i class="fas fa-file-upload"></i>
+                    <span>Yangi Fayl</span>
+                </a>
+                <a href="/admin/accident/create" class="action-btn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Yangi Hodisa</span>
+                </a>
+                <a href="/admin/folder/list" class="action-btn">
+                    <i class="fas fa-th-list"></i>
+                    <span>Barcha Papkalar</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/static/js/custom.js"></script>
+
+    <script>
+        // Counter Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter');
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                updateCounter();
+            });
+        });
+
+        // Activity Chart
+        const ctx1 = document.getElementById('activityChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
+                datasets: [{
+                    label: 'Faollik',
+                    data: [12, 19, 15, 25, 22, 30, 28],
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#6366f1',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    pointHoverBackgroundColor: '#6366f1',
+                    pointHoverBorderColor: '#fff',
+                    pointHoverBorderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#94a3b8',
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                        borderWidth: 1,
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return 'Faollik: ' + context.parsed.y + ' ta';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#64748b',
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(100, 116, 139, 0.1)',
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#64748b',
+                            font: { size: 12 }
+                        },
+                        grid: {
+                            color: 'rgba(100, 116, 139, 0.1)',
+                            drawBorder: false
+                        }
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+
+        // Distribution Chart
+        const ctx2 = document.getElementById('distributionChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Papkalar', 'Fayllar', 'Hodisalar', 'Testlar'],
+                datasets: [{
+                    data: [{{ folder_count }}, {{ file_count }}, {{ accident_count }}, 15],
+                    backgroundColor: [
+                        '#3b82f6',
+                        '#8b5cf6',
+                        '#f59e0b',
+                        '#10b981'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 15,
+                    hoverBorderColor: '#fff',
+                    hoverBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#94a3b8',
+                            padding: 20,
+                            font: {
+                                size: 13,
+                                weight: 600
+                            },
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#94a3b8',
+                        borderColor: 'rgba(99, 102, 241, 0.3)',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return label + ': ' + value + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

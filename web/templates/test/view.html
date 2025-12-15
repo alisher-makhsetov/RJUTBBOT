@@ -1,0 +1,401 @@
+<!-- web/templates/test/view.html -->
+{% extends 'base.html' %}
+
+{% block title %}Test #{{ test.id }} - RJUTB Admin{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('test.list') }}">Testlar</a>
+<span>/</span>
+<span class="current">Test #{{ test.id }}</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .view-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .view-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .view-title {
+        flex: 1;
+    }
+
+    .view-title h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .view-title .badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-category {
+        background: rgba(99, 102, 241, 0.15);
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .badge-image {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .view-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 116, 139, 0.1);
+        color: #94a3b8;
+        border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(100, 116, 139, 0.2);
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .info-card h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .question-text {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        color: #f8fafc;
+        line-height: 1.8;
+        font-size: 1.05rem;
+        margin-bottom: 20px;
+    }
+
+    .image-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        word-break: break-all;
+    }
+
+    /* Answers */
+    .answers-grid {
+        display: grid;
+        gap: 15px;
+    }
+
+    .answer-item {
+        background: rgba(15, 23, 42, 0.6);
+        border: 2px solid rgba(51, 65, 85, 0.4);
+        border-radius: 12px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .answer-item.correct {
+        background: rgba(16, 185, 129, 0.15);
+        border-color: rgba(16, 185, 129, 0.5);
+    }
+
+    .answer-label {
+        width: 45px;
+        height: 45px;
+        background: rgba(99, 102, 241, 0.2);
+        border: 2px solid rgba(99, 102, 241, 0.4);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #6366f1;
+        flex-shrink: 0;
+    }
+
+    .answer-item.correct .answer-label {
+        background: rgba(16, 185, 129, 0.3);
+        border-color: rgba(16, 185, 129, 0.6);
+        color: #10b981;
+    }
+
+    .answer-text {
+        flex: 1;
+        color: #f8fafc;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .correct-badge {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    /* Info Grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: #f8fafc;
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .view-header {
+            flex-direction: column;
+        }
+
+        .view-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .btn {
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="view-container">
+    <!-- Header -->
+    <div class="view-header">
+        <div class="view-title">
+            <h1>
+                <i class="fas fa-question-circle"></i>
+                <span>Test #{{ test.id }}</span>
+            </h1>
+            <div class="badges">
+                {% if test.categories %}
+                    {% for category in test.categories %}
+                    <span class="badge badge-category">
+                        <i class="fas fa-tag"></i> {{ category.name }} ({{ category.section }})
+                    </span>
+                    {% endfor %}
+                {% endif %}
+                {% if test.image %}
+                <span class="badge badge-image">
+                    <i class="fas fa-image"></i> Rasm bor
+                </span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="view-actions">
+            <a href="{{ url_for('test.edit', id=test.id) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i>
+                <span>Tahrirlash</span>
+            </a>
+            <a href="{{ url_for('test.list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                <span>Orqaga</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Question -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-file-alt"></i>
+            <span>Savol</span>
+        </h2>
+        <div class="question-text">
+            {{ test.text }}
+        </div>
+
+        {% if test.image %}
+        <h2 style="margin-top: 25px;">
+            <i class="fas fa-image"></i>
+            <span>Rasm (Telegram File ID)</span>
+        </h2>
+        <div class="image-box">
+            {{ test.image }}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Answers -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-list-ol"></i>
+            <span>Javoblar</span>
+        </h2>
+
+        <div class="answers-grid">
+            {% for i in range(4) %}
+                {% if answers|length > i %}
+                <div class="answer-item {% if answers[i].is_correct %}correct{% endif %}">
+                    <div class="answer-label">
+                        {{ ['A', 'B', 'C', 'D'][i] }}
+                    </div>
+                    <div class="answer-text">
+                        {{ answers[i].text }}
+                    </div>
+                    {% if answers[i].is_correct %}
+                    <div class="correct-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>To'g'ri javob</span>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="info-card">
+        <h2>
+            <i class="fas fa-info-circle"></i>
+            <span>Qo'shimcha Ma'lumotlar</span>
+        </h2>
+
+        <div class="info-grid">
+            <!-- ID -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-hashtag"></i> ID
+                </div>
+                <div class="info-value">#{{ test.id }}</div>
+            </div>
+
+            <!-- Categories Count -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-tags"></i> Kategoriyalar Soni
+                </div>
+                <div class="info-value">
+                    {{ test.categories|length }} ta
+                </div>
+            </div>
+
+            <!-- Answers Count -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-list-ol"></i> Javoblar Soni
+                </div>
+                <div class="info-value">
+                    {{ answers|length }} ta
+                </div>
+            </div>
+
+            <!-- Created -->
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="fas fa-clock"></i> Yaratilgan
+                </div>
+                <div class="info-value">
+                    {% if test.created_at %}
+                    {{ test.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
