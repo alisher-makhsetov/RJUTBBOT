@@ -1,27 +1,42 @@
-version: "2.32.4"
-
+version: "3.8"
 
 services:
   bot:
     build: .
-    image: test_bot:alpine
-    container_name: test_con
+    image: rjutb_bot:alpine
+    container_name: rjutb_bot
     restart: always
+    env_file:
+      - .env
     depends_on:
       - pg
-    command: sh -c "alembic revision --autogenerate -m 'Create a baseline migrations' &&
-                   alembic upgrade head &&
+    command: sh -c "python3 db/init_db.py && 
+                   pybabel compile -d locales &&
                    python3 main.py"
 
+  web:
+    build: .
+    image: rjutb_bot:alpine
+    container_name: rjutb_web
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - pg
+    command: python3 web/app.py
+
   pg:
-    image: postgres:alpine
-    container_name: pg_con
+    image: postgres:15-alpine
+    container_name: rjutb_pg
     restart: always
     environment:
-      POSTGRES_PASSWORD: 1
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
-
     volumes:
       - pg_data:/var/lib/postgresql/data
 
