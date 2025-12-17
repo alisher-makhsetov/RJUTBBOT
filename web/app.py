@@ -1,11 +1,9 @@
 # web/app.py
 """
 RJUTB Admin Panel - Custom Flask Application
-Professional admin panel with beautiful UI
 """
-from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from functools import wraps
+from flask import Flask, render_template, redirect, url_for, session
+from flask_login import LoginManager, login_required, current_user
 from datetime import datetime
 import sys
 from pathlib import Path
@@ -15,6 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from web.config import FlaskConfig
+from web.models import User  # ← YANGI IMPORT!
 from db import get_sync_session
 from db.models import (
     Folder, File,
@@ -24,7 +23,6 @@ from db.models import (
     Test, TestCategory,
     User as BotUser
 )
-from sqlalchemy import func
 
 # ========== FLASK APP ==========
 app = Flask(__name__)
@@ -36,13 +34,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
 
 
-# ========== USER CLASS ==========
-class User(UserMixin):
-    def __init__(self, username):
-        self.id = username
-        self.username = username
-
-
+# ========== USER LOADER ==========
 @login_manager.user_loader
 def load_user(user_id):
     if user_id == FlaskConfig.ADMIN_USERNAME:
@@ -51,8 +43,6 @@ def load_user(user_id):
 
 
 # ========== ROUTES ==========
-
-# --- HOME ---
 @app.route('/')
 def index():
     """Redirect to dashboard"""

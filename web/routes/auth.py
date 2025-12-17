@@ -5,7 +5,7 @@ Authentication Routes - Login/Logout
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from flask_login import login_user, logout_user, current_user
 from web.config import FlaskConfig
-from web.app import User
+from web.models import User  # ← YANGI IMPORT!
 import bcrypt
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -23,26 +23,16 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # ✅ USERNAME TEKSHIRISH (.env dan)
         if username == FlaskConfig.ADMIN_USERNAME:
             try:
-                # ✅ BCRYPT HASH TEKSHIRISH (.env dan)
                 stored_hash = FlaskConfig.ADMIN_PASSWORD
-
-                # Password ni bytes ga o'girish
                 password_bytes = password.encode('utf-8')
                 stored_hash_bytes = stored_hash.encode('utf-8')
 
-                # Bcrypt bilan tekshirish
                 if bcrypt.checkpw(password_bytes, stored_hash_bytes):
-                    # ✅ LOGIN MUVAFFAQIYATLI
                     user = User(username)
                     login_user(user, remember=True)
-
-                    # Eski flash xabarlarni o'chirish
                     session.pop('_flashes', None)
-
-                    # Login success flagi
                     session['just_logged_in'] = True
 
                     next_page = request.args.get('next')
@@ -53,7 +43,6 @@ def login():
                 error = "Tizimda xatolik yuz berdi!"
                 return render_template('auth/login.html', error=error)
 
-        # ❌ Username yoki parol noto'g'ri
         error = "Noto'g'ri username yoki parol!"
 
     return render_template('auth/login.html', error=error)
