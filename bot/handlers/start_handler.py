@@ -2,10 +2,8 @@
 from aiogram import Router, F, Bot
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from aiogram.exceptions import TelegramBadRequest
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from datetime import datetime
 import asyncio
 import time
 from collections import defaultdict, deque

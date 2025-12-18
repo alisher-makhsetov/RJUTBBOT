@@ -1,9 +1,19 @@
 # bot/utils/texts.py
 from aiogram.utils.i18n import gettext as _
-from datetime import datetime, timezone
 from typing import List, Tuple
-import re
-import random
+
+
+# ============================ middlewares.py ============================
+
+def get_blocked_message() -> str:
+    """User bloklangan xabari"""
+    return _(
+        "🚫 <b>Hisobingiz bloklangan!</b>\n\n"
+        "Sizning botdan foydalanish huquqingiz "
+        "vaqtincha yoki doimiy cheklandi.\n\n"
+        "ℹ️ Sababi haqida ma'lumot olish uchun:\n"
+        "📞 Admin: @Islam_Melsovich"
+    )
 
 
 # ============================ start_handler ============================

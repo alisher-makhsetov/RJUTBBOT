@@ -60,6 +60,7 @@ from web.routes.accident import accident_bp
 from web.routes.conspect import conspect_bp
 from web.routes.video import video_bp
 from web.routes.test import test_bp
+from web.routes.users import users_bp
 
 # Register blueprints
 app.register_blueprint(auth_bp)
@@ -70,6 +71,7 @@ app.register_blueprint(accident_bp)
 app.register_blueprint(conspect_bp)
 app.register_blueprint(video_bp)
 app.register_blueprint(test_bp)
+app.register_blueprint(users_bp)
 
 # ========== ERROR HANDLERS ==========
 @app.errorhandler(404)

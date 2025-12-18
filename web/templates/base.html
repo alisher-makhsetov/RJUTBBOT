@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RJUTB_BOT Admin Panel{% endblock %}</title>
 
+    <!-- Favicon ← YANGI! (8-10 qatorlar) -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- SweetAlert2 CSS ← YANGI! (18-19 qatorlar) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
@@ -136,16 +143,16 @@
 
         /* Sidebar Navigation */
         .sidebar-nav {
-            padding: 12px 0;  /* 18px → 12px */
+            padding: 10px 0;
         }
 
-        /* Main Menu Item (Dashboard) - 170-qator atrofida */
+        /* Main Menu Item (Dashboard) */
         .nav-main {
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 13px 18px;  /* 15px → 13px */
-            margin: 0 12px 14px;  /* 18px → 14px */
+            padding: 11px 18px;
+            margin: 0 12px 14px;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1));
             border: 1px solid rgba(99, 102, 241, 0.25);
             border-radius: 12px;
@@ -186,8 +193,8 @@
 
         /* Section Headers */
         .nav-section {
-            padding: 14px 20px 10px;  /* 18px → 14px, 12px → 10px */
-            font-size: 0.75rem;
+            padding: 12px 20px 10px;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.3px;
@@ -195,7 +202,7 @@
             align-items: center;
             gap: 12px;
             position: relative;
-            margin-top: 8px;  /* 12px → 8px */
+            margin-top: 6px;
             color: #6366f1;
         }
 
@@ -230,13 +237,13 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 10px 20px;  /* 12px → 10px */
+            padding: 9px 20px;
             color: #94a3b8;
             text-decoration: none;
             transition: all 0.3s ease;
             position: relative;
             font-weight: 500;
-            margin: 0 12px 2px;  /* 1px → 0px, gap: 2px */
+            margin: 0 12px 1px;
             border-radius: 10px;
             font-size: 0.95rem;
         }
@@ -426,9 +433,9 @@
         /* Flash Messages */
         .flash-messages {
             position: fixed;
-            top: 20px;  /* ← TEPADAN 20px */
+            top: 20px;
             left: 50%;
-            transform: translateX(-50%);  /* ← MARKAZLASH */
+            transform: translateX(-50%);
             z-index: 10000;
             display: flex;
             flex-direction: column;
@@ -442,7 +449,7 @@
             align-items: center;
             gap: 14px;
             min-width: 320px;
-            animation: slideInDown 0.4s ease;  /* ← TEPADAN ANIMATSIYA */
+            animation: slideInDown 0.4s ease;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             font-weight: 500;
         }
@@ -450,7 +457,7 @@
         @keyframes slideInDown {
             from {
                 opacity: 0;
-                transform: translateY(-100px);  /* ← TEPADAN TUSHADI */
+                transform: translateY(-100px);
             }
             to {
                 opacity: 1;
@@ -465,7 +472,7 @@
             }
             to {
                 opacity: 0;
-                transform: translateY(-100px);  /* ← TEPAGA CHIQADI */
+                transform: translateY(-100px);
             }
         }
 
@@ -523,7 +530,6 @@
     <div class="admin-layout">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <!-- Header - Clickable -->
             <a href="{{ url_for('dashboard.index') }}" style="text-decoration: none; color: inherit;">
                 <div class="sidebar-header">
                     <div class="header-content">
@@ -539,16 +545,19 @@
             </a>
 
             <nav class="sidebar-nav">
-                <!-- Dashboard -->
                 <a href="{{ url_for('dashboard.index') }}" class="nav-main {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
                     <i class="fas fa-home"></i>
                     <span>Bosh Sahifa</span>
                 </a>
 
-                <!-- FOLDER Section -->
+                <a href="{{ url_for('users.list_users') }}" class="nav-item {% if 'users' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-users"></i>
+                    <span>Xodimlar</span>
+                </a>
+
                 <div class="nav-section">
                     <i class="fas fa-boxes"></i>
-                    <span>Umumiy Bo'lim</span>
+                    <span>Ma'lumotlar Bo'limi</span>
                 </div>
                 <a href="{{ url_for('folder.list') }}" class="nav-item {% if 'folder' in request.endpoint %}active{% endif %}">
                     <i class="fas fa-folder-open"></i>
@@ -559,10 +568,9 @@
                     <span>Fayllar</span>
                 </a>
 
-                <!-- ACCIDENT Section -->
                 <div class="nav-section">
                     <i class="fas fa-hard-hat"></i>
-                    <span>Baxtsiz Hodisalar</span>
+                    <span>BH Bo'limi</span>
                 </div>
                 <a href="{{ url_for('accident.years') }}" class="nav-item {% if request.endpoint == 'accident.years' %}active{% endif %}">
                     <i class="fas fa-calendar-alt"></i>
@@ -577,7 +585,6 @@
                     <span>Hodisalar</span>
                 </a>
 
-                <!-- CONSPECT Section -->
                 <div class="nav-section">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Konspektlar Bo'limi</span>
@@ -591,10 +598,9 @@
                     <span>Konspektlar</span>
                 </a>
 
-                <!-- VIDEO Section -->
                 <div class="nav-section">
                     <i class="fas fa-play-circle"></i>
-                    <span>Video Materiallar Bo'limi</span>
+                    <span>Videolar Bo'limi</span>
                 </div>
                 <a href="{{ url_for('video.categories') }}" class="nav-item {% if request.endpoint == 'video.categories' %}active{% endif %}">
                     <i class="fas fa-list-ul"></i>
@@ -605,10 +611,9 @@
                     <span>Videolar</span>
                 </a>
 
-                <!-- TEST Section -->
                 <div class="nav-section">
                     <i class="fas fa-clipboard-check"></i>
-                    <span>Test Bo'limi</span>
+                    <span>Testlar Bo'limi</span>
                 </div>
                 <a href="{{ url_for('test.categories') }}" class="nav-item {% if request.endpoint == 'test.categories' %}active{% endif %}">
                     <i class="fas fa-clipboard-list"></i>
@@ -621,9 +626,7 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Top Navbar -->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <button class="menu-toggle" id="menuToggle">
@@ -648,7 +651,6 @@
                 </div>
             </header>
 
-            <!-- Flash Messages -->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 <div class="flash-messages">
@@ -667,12 +669,10 @@
                 {% endif %}
             {% endwith %}
 
-            <!-- Content Area -->
             <div class="content-area">
                 {% block content %}{% endblock %}
             </div>
 
-            <!-- Footer -->
             <footer class="footer">
                 © 2025 RJUTB_BOT. Barcha huquqlar himoyalangan. | Admin Panel v1.0
             </footer>
@@ -682,8 +682,10 @@
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 
+    <!-- SweetAlert2 JS ← YANGI! (700-701 qatorlar) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
 
@@ -692,7 +694,6 @@
                 sidebar.classList.toggle('open');
             });
 
-            // Close sidebar when clicking outside
             document.addEventListener('click', (e) => {
                 if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                     sidebar.classList.remove('open');
@@ -700,7 +701,6 @@
             });
         }
 
-        // Auto-hide flash messages
         setTimeout(() => {
             const flashMessages = document.querySelectorAll('.flash-message');
             flashMessages.forEach(msg => {

@@ -1,3 +1,4 @@
+# bot/middlewares.py
 from typing import Callable, Awaitable, Dict, Any, List
 from aiogram import BaseMiddleware, Bot
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
@@ -146,12 +147,12 @@ class JoinGroupMiddleware(BaseMiddleware):
             # Warning text
             text = (
                 "🔒 Botdan foydalanish cheklangan!\n"
-                "🏢 Bu Bot faqat ECH-10 korxonasi xodimlari uchun mo'ljallangan.\n\n"
+                "🏢 Ushbu bot Qo‘ng‘irot MTU filiali xodimlari uchun mo‘ljallangan.\n\n"
                 "📋 Botdan foydalanish uchun:\n"
-                "• Quyidagi rasmiy guruh/kanalga qo'shiling\n"
-                "• Administrator sizni tasdiqlaydi\n"
-                "• Keyin Botdan to'liq foydalanishingiz mumkin\n\n"
-                "👇 Qo'shilish uchun tugmani bosing:"
+                "• Quyidagi rasmiy Guruh yoki Kanalga qo'shiling\n"
+                "• Administrator tomonidan tasdiqlaning\n"
+                "• Shundan so‘ng Botdan to‘liq foydalanishingiz mumkin\n\n"
+                "👇 Qo‘shilish uchun quyidagi tugmani bosing:"
             )
 
             # Inline keyboard yaratish
@@ -187,7 +188,7 @@ class JoinGroupMiddleware(BaseMiddleware):
             text = (
                 "❌ Siz kerakli Guruh yoki Kanalga a'zo emassiz yoki chetlashtirilgansiz.\n"
                 "🤖 Botdan foydalanish uchun administrator sizni guruhga qo'shishi kerak.\n"
-                "📩 Iltimos, admin bilan bog'laning."
+                "📩 Iltimos, Admin bilan bog'laning."
             )
 
             sent_msg = await message.answer(text)
@@ -214,7 +215,7 @@ class JoinGroupMiddleware(BaseMiddleware):
                         pass
                 user_warn_messages[user_id].clear()
 
-            text = "❌ Kanal yoki guruhga kirishda xatolik yuz berdi. Iltimos, admin bilan bog'laning."
+            text = "❌ Kanal yoki guruhga kirishda xatolik yuz berdi. Iltimos, Admin bilan bog'laning."
 
             sent_msg = await message.answer(text)
             user_warn_messages.setdefault(user_id, []).append(sent_msg.message_id)
@@ -317,4 +318,55 @@ class RateLimitMiddleware(BaseMiddleware):
             for uid in users_to_remove:
                 del self.user_requests[uid]
 
+        return await handler(event, data)
+
+
+class UserBlockMiddleware(BaseMiddleware):
+    """
+    User bloklangan bo'lsa, blok xabari ko'rsatadi
+    """
+
+    async def __call__(
+            self,
+            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+            event: TelegramObject,
+            data: Dict[str, Any],
+    ) -> Any:
+        # Faqat Message va CallbackQuery
+        if not isinstance(event, (Message, CallbackQuery)):
+            return await handler(event, data)
+
+        user_obj = getattr(event, 'from_user', None)
+        if not user_obj:
+            return await handler(event, data)
+
+        session: AsyncSession = data.get("session")
+        if not session:
+            return await handler(event, data)
+
+        # User'ni olish (DbSessionMiddleware'dan session allaqachon ochiq)
+        from db.models import User
+        result = await session.execute(
+            select(User).where(User.telegram_id == user_obj.id)
+        )
+        user = result.scalar_one_or_none()
+
+        # BLOKLANGAN BO'LSA
+        if user and not user.is_active:
+            # texts.py dan import
+            from bot.utils.texts import get_blocked_message
+
+            text = get_blocked_message()  # Ko'p tillikda
+
+            if isinstance(event, Message):
+                await event.answer(text, parse_mode='HTML')
+            else:  # CallbackQuery
+                await event.answer(
+                    text.replace('<b>', '').replace('</b>', ''),
+                    show_alert=True
+                )
+
+            return  # Handler'ni to'xtatish
+
+        # Faol - davom
         return await handler(event, data)

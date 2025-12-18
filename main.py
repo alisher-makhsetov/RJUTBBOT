@@ -9,7 +9,7 @@ from aiogram.types import BotCommand
 from aiogram.utils.i18n import I18n, FSMI18nMiddleware
 
 from bot.handlers import dp
-from bot.middlewares import DbSessionMiddleware, JoinGroupMiddleware, UserLanguageMiddleware, RateLimitMiddleware
+from bot.middlewares import DbSessionMiddleware, JoinGroupMiddleware, UserBlockMiddleware, UserLanguageMiddleware, RateLimitMiddleware
 from utils.env_data import Config as cf
 
 from db import db
@@ -55,11 +55,15 @@ async def main() -> None:
     dp.message.outer_middleware(JoinGroupMiddleware(async_session_maker))
     dp.callback_query.outer_middleware(JoinGroupMiddleware(async_session_maker))
 
-    # 4. User language loading - OXIRIDA (til o'rnatadi va override qiladi)
+    # 4. USER BLOCK CHECK - TO'RTINCHI ← SHU YERGA! YANGI!
+    dp.message.outer_middleware(UserBlockMiddleware())
+    dp.callback_query.outer_middleware(UserBlockMiddleware())
+
+    # 5. User language loading - OXIRIDA (til o'rnatadi va override qiladi)
     dp.message.outer_middleware(UserLanguageMiddleware(async_session_maker, i18n))
     dp.callback_query.outer_middleware(UserLanguageMiddleware(async_session_maker, i18n))
 
-    # 5. Group router'ga middleware qo'shish
+    # 6. Group router'ga middleware qo'shish
     from bot.handlers.group_events import group_router
     group_router.chat_member.outer_middleware(DbSessionMiddleware(async_session_maker))
 

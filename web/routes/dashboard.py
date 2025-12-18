@@ -22,7 +22,7 @@ dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 def index():
     """Dashboard index page with statistics"""
 
-    # ✅ LOGIN SUCCESS FLASH MESSAGE - YANGI QO'SHILDI!
+    # ✅ LOGIN SUCCESS FLASH MESSAGE
     if session.pop('just_logged_in', False):
         flash('Tizimga muvaffaqiyatli kirdingiz!', 'success')
 
@@ -85,7 +85,7 @@ def index():
 
         # ========== GRAFIKLAR UCHUN MA'LUMOTLAR ==========
 
-        # 1. OYLIK FAOLLIK - UMUMIY (5 ta asosiy) ✅ VARIANT C
+        # 1. OYLIK FAOLLIK - UMUMIY (5 ta asosiy)
         monthly_activity_stats = db_session.query(
             UserActivity.activity_type,
             func.count(UserActivity.id).label('count')
@@ -113,7 +113,7 @@ def index():
             activity_labels.append(activity_names[activity_type])
             activity_counts.append(activity_dict.get(activity_type, 0))
 
-        # 2. PAPKALAR BO'YICHA FAOLLIK - BATAFSIL (7 ta papka) ✅ VARIANT C
+        # 2. PAPKALAR BO'YICHA FAOLLIK - BATAFSIL (7 ta papka)
         folder_activity_stats = db_session.query(
             UserActivity.parent_type,
             func.count(UserActivity.id).label('count')
@@ -230,23 +230,23 @@ def index():
         conspect_comparison_labels = ['MM Konspektlari', 'SX Konspektlari']
         conspect_comparison_counts = [mm_conspects, sx_conspects]
 
-        # 7. ENG KO'P KO'RILGAN HODISALAR (TOP 5)
-        top_accidents = db_session.query(
-            Accident.title,
-            func.count(AccidentView.id).label('views')
-        ).join(AccidentView).group_by(Accident.id, Accident.title).order_by(desc('views')).limit(5).all()
+        # 7. BAXTSIZ HODISALAR YILLAR BO'YICHA ✅ YANGI!
+        accidents_by_year = db_session.query(
+            AccidentYear.name,
+            func.count(Accident.id).label('count')
+        ).join(Accident).group_by(AccidentYear.id, AccidentYear.name).order_by(AccidentYear.name).all()
 
-        top_accidents_labels = []
-        top_accidents_counts = []
+        accident_year_labels = []
+        accident_year_counts = []
 
-        if top_accidents:
-            for title, views in top_accidents:
-                short_title = title[:35] + '...' if len(title) > 35 else title
-                top_accidents_labels.append(short_title)
-                top_accidents_counts.append(views)
+        if accidents_by_year:
+            for year_name, count in accidents_by_year:
+                accident_year_labels.append(year_name)
+                accident_year_counts.append(count)
         else:
-            top_accidents_labels = ['Ma\'lumot yo\'q']
-            top_accidents_counts = [0]
+            # Demo data - yillar
+            accident_year_labels = [f'{current_year - 4 + i}-yil' for i in range(5)]
+            accident_year_counts = [0] * 5
 
         # 8. MM VS SX VIDEOLAR
         video_comparison_labels = ['MM Videolari', 'SX Videolari']
@@ -283,8 +283,8 @@ def index():
         test_comparison_counts = [0, 0]
         conspect_comparison_labels = ['MM Konspektlari', 'SX Konspektlari']
         conspect_comparison_counts = [0, 0]
-        top_accidents_labels = ['Ma\'lumot yo\'q']
-        top_accidents_counts = [0]
+        accident_year_labels = [f'{datetime.now().year - 4 + i}-yil' for i in range(5)]
+        accident_year_counts = [0] * 5
         video_comparison_labels = ['MM Videolari', 'SX Videolari']
         video_comparison_counts = [0, 0]
 
@@ -332,8 +332,8 @@ def index():
         test_comparison_counts=json.dumps(test_comparison_counts),
         conspect_comparison_labels=json.dumps(conspect_comparison_labels),
         conspect_comparison_counts=json.dumps(conspect_comparison_counts),
-        top_accidents_labels=json.dumps(top_accidents_labels),
-        top_accidents_counts=json.dumps(top_accidents_counts),
+        accident_year_labels=json.dumps(accident_year_labels),
+        accident_year_counts=json.dumps(accident_year_counts),
         video_comparison_labels=json.dumps(video_comparison_labels),
         video_comparison_counts=json.dumps(video_comparison_counts),
     )

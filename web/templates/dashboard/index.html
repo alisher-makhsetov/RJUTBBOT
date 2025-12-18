@@ -607,14 +607,14 @@
 
 <!-- Row 6: Hodisalar va Videolar (2 ta) -->
 <div class="charts-grid">
-    <!-- Eng Ko'p Ko'rilgan Hodisalar -->
+    <!-- Baxtsiz Hodisalar Yillar Bo'yicha ← YANGI! -->
     <div class="chart-card">
         <h3>
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Eng Ko'p Ko'rilgan Hodisalar</span>
+            <i class="fas fa-chart-line"></i>
+            <span>Baxtsiz Hodisalar Dinamikasi</span>
         </h3>
         <div class="chart-container">
-            <canvas id="topAccidentsChart"></canvas>
+            <canvas id="accidentYearChart"></canvas>
         </div>
     </div>
 
@@ -1023,23 +1023,28 @@
         }
     });
 
-    // 8. ENG KO'P KO'RILGAN HODISALAR (Horizontal Bar)
-    new Chart(document.getElementById('topAccidentsChart'), {
-        type: 'bar',
+    // 8. BAXTSIZ HODISALAR YILLAR BO'YICHA (Line) ✅ YANGI!
+    new Chart(document.getElementById('accidentYearChart'), {
+        type: 'line',
         data: {
-            labels: {{ top_accidents_labels|safe }},
+            labels: {{ accident_year_labels|safe }},
             datasets: [{
-                label: 'Ko\'rishlar',
-                data: {{ top_accidents_counts|safe }},
-                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                label: 'Hodisalar Soni',
+                data: {{ accident_year_counts|safe }},
                 borderColor: 'rgb(239, 68, 68)',
-                borderWidth: 2,
-                borderRadius: 10
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'rgb(239, 68, 68)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 3,
+                pointRadius: 6,
+                pointHoverRadius: 8
             }]
         },
         options: {
             ...commonOptions,
-            indexAxis: 'y',
             plugins: {
                 ...commonOptions.plugins,
                 legend: {
@@ -1047,7 +1052,7 @@
                 }
             },
             scales: {
-                x: {
+                y: {
                     beginAtZero: true,
                     ticks: {
                         color: tickColor,
@@ -1060,17 +1065,18 @@
                         color: gridColor
                     }
                 },
-                y: {
+                x: {
                     ticks: {
                         color: tickColor
                     },
                     grid: {
-                        display: false
+                        color: 'rgba(239, 68, 68, 0.1)'
                     }
                 }
             }
         }
     });
+
 
     // 9. VIDEOLAR (MM vs SX) - Pie
     new Chart(document.getElementById('videoComparisonChart'), {
