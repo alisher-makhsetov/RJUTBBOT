@@ -325,7 +325,7 @@ class UserBlockMiddleware(BaseMiddleware):
     """User bloklangan bo'lsa, blok xabari ko'rsatadi"""
 
     def __init__(self):
-        self.blocked_notified = {}  # ← YANGI! Cache
+        self.blocked_notified = {}
 
     async def __call__(self, handler, event, data):
         if not isinstance(event, (Message, CallbackQuery)):
@@ -346,25 +346,32 @@ class UserBlockMiddleware(BaseMiddleware):
         user = result.scalar_one_or_none()
 
         if user and not user.is_active:
-            # ✅ FAQAT BIR MARTA XABAR
             if user.telegram_id not in self.blocked_notified:
+                # User tilini o'rnatish
+                i18n: I18n = data.get('i18n')
+                if i18n and user.language_code:
+                    i18n.current_locale = user.language_code
+
                 from bot.utils.texts import get_blocked_message
                 text = get_blocked_message()
 
                 if isinstance(event, Message):
-                    msg = await event.answer(text, parse_mode='HTML')
+                    await event.answer(text, parse_mode='HTML')
                 else:
                     await event.answer(
                         text.replace('<b>', '').replace('</b>', ''),
                         show_alert=True
                     )
 
-                # Cache'ga qo'shish
                 self.blocked_notified[user.telegram_id] = True
+            else:
+                # Qayta bosilganda qisqa javob (KO'P TILLIK!)
+                if isinstance(event, CallbackQuery):
+                    from bot.utils.texts import get_blocked_short_message
+                    await event.answer(get_blocked_short_message(), show_alert=False)
 
-            return  # Handler'ni to'xtatish
+            return
 
-        # ✅ BLOKDAN CHIQSA - CACHE TOZALASH
         if user and user.is_active:
             if user.telegram_id in self.blocked_notified:
                 del self.blocked_notified[user.telegram_id]

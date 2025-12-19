@@ -9,16 +9,19 @@ def get_blocked_message() -> str:
     """User bloklangan xabari"""
     return _(
         "🚫 <b>KIRISH TAQIQLANDI</b>\n\n"
-        "━━━━━━━━━━━━━━━━━━━\n\n"
-        "⚠️ <b>Sizning hisobingiz bloklangan</b>\n\n"
+        "━━━━━━━━━━━━━━━━━━━\n"
+        "⚠️ <b>Sizning hisobingiz bloklangan</b>\n"
         "Botdan foydalanish huquqingiz vaqtincha "
-        "yoki doimiy cheklandi.\n\n"
+        "yoki doimiy cheklandi.\n"
         "━━━━━━━━━━━━━━━━━━━\n\n"
-        "📞 <b>Aloqa uchun:</b>\n"
-        "👤 Admin: @Islam_Melsovich\n\n"
+        "👤 Admin: @Islam_Melsovich\n"
         "💬 Sabab va ma'lumot olish uchun "
         "admin bilan bog'laning."
     )
+
+def get_blocked_short_message() -> str:
+    """User bloklangan qisqa xabari (popup uchun)"""
+    return _("❌ Hisobingiz bloklangan!")
 
 
 # ============================ start_handler ============================
