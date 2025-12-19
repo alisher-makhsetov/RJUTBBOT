@@ -322,17 +322,12 @@ class RateLimitMiddleware(BaseMiddleware):
 
 
 class UserBlockMiddleware(BaseMiddleware):
-    """
-    User bloklangan bo'lsa, blok xabari ko'rsatadi
-    """
+    """User bloklangan bo'lsa, blok xabari ko'rsatadi"""
 
-    async def __call__(
-            self,
-            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-            event: TelegramObject,
-            data: Dict[str, Any],
-    ) -> Any:
-        # Faqat Message va CallbackQuery
+    def __init__(self):
+        self.blocked_notified = {}  # ← YANGI! Cache
+
+    async def __call__(self, handler, event, data):
         if not isinstance(event, (Message, CallbackQuery)):
             return await handler(event, data)
 
@@ -344,29 +339,34 @@ class UserBlockMiddleware(BaseMiddleware):
         if not session:
             return await handler(event, data)
 
-        # User'ni olish (DbSessionMiddleware'dan session allaqachon ochiq)
         from db.models import User
         result = await session.execute(
             select(User).where(User.telegram_id == user_obj.id)
         )
         user = result.scalar_one_or_none()
 
-        # BLOKLANGAN BO'LSA
         if user and not user.is_active:
-            # texts.py dan import
-            from bot.utils.texts import get_blocked_message
+            # ✅ FAQAT BIR MARTA XABAR
+            if user.telegram_id not in self.blocked_notified:
+                from bot.utils.texts import get_blocked_message
+                text = get_blocked_message()
 
-            text = get_blocked_message()  # Ko'p tillikda
+                if isinstance(event, Message):
+                    msg = await event.answer(text, parse_mode='HTML')
+                else:
+                    await event.answer(
+                        text.replace('<b>', '').replace('</b>', ''),
+                        show_alert=True
+                    )
 
-            if isinstance(event, Message):
-                await event.answer(text, parse_mode='HTML')
-            else:  # CallbackQuery
-                await event.answer(
-                    text.replace('<b>', '').replace('</b>', ''),
-                    show_alert=True
-                )
+                # Cache'ga qo'shish
+                self.blocked_notified[user.telegram_id] = True
 
             return  # Handler'ni to'xtatish
 
-        # Faol - davom
+        # ✅ BLOKDAN CHIQSA - CACHE TOZALASH
+        if user and user.is_active:
+            if user.telegram_id in self.blocked_notified:
+                del self.blocked_notified[user.telegram_id]
+
         return await handler(event, data)

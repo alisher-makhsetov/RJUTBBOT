@@ -8,11 +8,16 @@ from typing import List, Tuple
 def get_blocked_message() -> str:
     """User bloklangan xabari"""
     return _(
-        "🚫 <b>Hisobingiz bloklangan!</b>\n\n"
-        "Sizning botdan foydalanish huquqingiz "
-        "vaqtincha yoki doimiy cheklandi.\n\n"
-        "ℹ️ Sababi haqida ma'lumot olish uchun:\n"
-        "📞 Admin: @Islam_Melsovich"
+        "🚫 <b>KIRISH TAQIQLANDI</b>\n\n"
+        "━━━━━━━━━━━━━━━━━━━\n\n"
+        "⚠️ <b>Sizning hisobingiz bloklangan</b>\n\n"
+        "Botdan foydalanish huquqingiz vaqtincha "
+        "yoki doimiy cheklandi.\n\n"
+        "━━━━━━━━━━━━━━━━━━━\n\n"
+        "📞 <b>Aloqa uchun:</b>\n"
+        "👤 Admin: @Islam_Melsovich\n\n"
+        "💬 Sabab va ma'lumot olish uchun "
+        "admin bilan bog'laning."
     )
 
 
