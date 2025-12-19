@@ -346,27 +346,43 @@ class UserBlockMiddleware(BaseMiddleware):
         user = result.scalar_one_or_none()
 
         if user and not user.is_active:
-            if user.telegram_id not in self.blocked_notified:
-                # User tilini o'rnatish
-                i18n: I18n = data.get('i18n')
-                if i18n and user.language_code:
-                    i18n.current_locale = user.language_code
+            i18n: I18n = data.get('i18n')
+            if i18n and user.language_code:
+                i18n.current_locale = user.language_code
 
+            if user.telegram_id not in self.blocked_notified:
                 from bot.utils.texts import get_blocked_message
                 text = get_blocked_message()
 
                 if isinstance(event, Message):
+                    try:
+                        await event.bot.delete_message(chat_id=event.chat.id, message_id=event.message_id)
+                    except:
+                        pass
                     await event.answer(text, parse_mode='HTML')
                 else:
-                    await event.answer(
-                        text.replace('<b>', '').replace('</b>', ''),
-                        show_alert=True
-                    )
+                    await event.answer(text.replace('<b>', '').replace('</b>', '').replace('\n\n', '\n'),
+                                       show_alert=True)
 
                 self.blocked_notified[user.telegram_id] = True
             else:
-                # Qayta bosilganda qisqa javob (KO'P TILLIK!)
-                if isinstance(event, CallbackQuery):
+                if isinstance(event, Message):
+                    try:
+                        await event.bot.delete_message(chat_id=event.chat.id, message_id=event.message_id)
+                    except:
+                        pass
+
+                    from bot.utils.texts import get_blocked_short_message
+                    msg = await event.answer(get_blocked_short_message())
+
+                    import asyncio
+                    await asyncio.sleep(3)
+                    try:
+                        await event.bot.delete_message(chat_id=event.chat.id, message_id=msg.message_id)
+                    except:
+                        pass
+
+                elif isinstance(event, CallbackQuery):
                     from bot.utils.texts import get_blocked_short_message
                     await event.answer(get_blocked_short_message(), show_alert=False)
 
