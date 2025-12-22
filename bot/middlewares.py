@@ -384,7 +384,7 @@ class UserBlockMiddleware(BaseMiddleware):
 
                 elif isinstance(event, CallbackQuery):
                     from bot.utils.texts import get_blocked_short_message
-                    await event.answer(get_blocked_short_message(), show_alert=False)
+                    await event.answer(get_blocked_short_message(), show_alert=True)  # ← TRUE!
 
             return
 
