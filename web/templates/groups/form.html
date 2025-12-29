@@ -1,0 +1,506 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if group %}Guruhni Tahrirlash{% else %}Yangi Guruh{% endif %} - RJUTB Admin
+{% endblock %}
+
+{% block breadcrumb %}
+<a href="{{ url_for('dashboard.index') }}">
+    <i class="fas fa-home"></i>
+    <span>Bosh Sahifa</span>
+</a>
+<span>/</span>
+<a href="{{ url_for('groups.list_groups') }}">
+    <span>Kanal va Guruhlar</span>
+</a>
+<span>/</span>
+<span class="current">{% if group %}Tahrirlash{% else %}Yangi Qo'shish{% endif %}</span>
+{% endblock %}
+
+{% block content %}
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background: rgba(51, 65, 85, 0.6);
+        color: #f8fafc;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(51, 65, 85, 0.4);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(51, 65, 85, 0.8);
+        transform: translateY(-2px);
+    }
+
+    .form-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    .form-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 12px;
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #f8fafc;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-group label .required {
+        color: #ef4444;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(51, 65, 85, 0.4);
+        border-radius: 8px;
+        color: #f8fafc;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-group input:disabled {
+        background: rgba(15, 23, 42, 0.95);
+        cursor: not-allowed;
+        opacity: 0.7;
+        border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .form-text {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: #94a3b8;
+    }
+
+    .form-text i {
+        margin-right: 5px;
+        color: #6366f1;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: rgba(99, 102, 241, 0.05);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 8px;
+    }
+
+    .form-check input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .form-check label {
+        margin: 0;
+        cursor: pointer;
+        color: #f8fafc;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .help-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .help-header {
+        padding: 20px;
+        background: rgba(99, 102, 241, 0.1);
+        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #f8fafc;
+        font-weight: 700;
+    }
+
+    .help-body {
+        padding: 20px;
+    }
+
+    .help-section {
+        margin-bottom: 20px;
+    }
+
+    .help-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .help-section h6 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        color: #f8fafc;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .help-section ol,
+    .help-section p {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .help-section ol {
+        padding-left: 20px;
+    }
+
+    .help-section ol li {
+        margin-bottom: 5px;
+    }
+
+    .info-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 20px;
+    }
+
+    .info-header {
+        padding: 15px 20px;
+        background: rgba(59, 130, 246, 0.1);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #3b82f6;
+        font-weight: 700;
+    }
+
+    .info-body {
+        padding: 20px;
+    }
+
+    .info-item {
+        margin-bottom: 12px;
+    }
+
+    .info-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .info-item strong {
+        color: #f8fafc;
+        font-size: 0.85rem;
+    }
+
+    .info-item p,
+    .info-item code {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin: 5px 0 0 0;
+    }
+
+    .info-item code {
+        background: rgba(15, 23, 42, 0.6);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+    }
+
+    .alert-warning {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 20px;
+        display: flex;
+        align-items: start;
+        gap: 10px;
+    }
+
+    .alert-warning i {
+        color: #f59e0b;
+        font-size: 1.2rem;
+        margin-top: 2px;
+    }
+
+    .alert-warning strong {
+        color: #f59e0b;
+        font-size: 0.85rem;
+    }
+
+    .alert-warning p {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin: 5px 0 0 0;
+    }
+
+    @media (max-width: 1024px) {
+        .form-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="page-header">
+    <h1>
+        <i class="fas fa-users-cog"></i>
+        <span>{% if group %}Guruhni Tahrirlash{% else %}Yangi Guruh Qo'shish{% endif %}</span>
+    </h1>
+    <a href="{{ url_for('groups.list_groups') }}" class="btn-secondary">
+        <i class="fas fa-arrow-left"></i>
+        <span>Orqaga</span>
+    </a>
+</div>
+
+<div class="form-container">
+    <!-- Form -->
+    <div>
+        <div class="form-card">
+            <form method="POST">
+                <!-- Chat ID -->
+                <div class="form-group">
+                    <label for="chat_id">
+                        Guruh ID <span class="required">*</span>
+                    </label>
+                    <input type="text"
+                           id="chat_id"
+                           name="chat_id"
+                           {% if group %}
+                           value="{{ group.chat_id }}"
+                           disabled
+                           {% else %}
+                           value="{{ chat_id or '' }}"
+                           placeholder="-1001234567890"
+                           {% endif %}
+                           required>
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Telegram guruh yoki kanal ID raqami
+                    </div>
+                </div>
+
+                {% if group %}
+                <!-- Hidden input for disabled field -->
+                <input type="hidden" name="chat_id" value="{{ group.chat_id }}">
+                {% endif %}
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="title">
+                        Guruh Nomi
+                    </label>
+                    <input type="text"
+                           id="title"
+                           name="title"
+                           value="{{ group.title if group else (title or '') }}"
+                           placeholder="Masalan: RJUTB Rasmiy Guruh">
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Guruh nomini kiriting (ixtiyoriy)
+                    </div>
+                </div>
+
+                <!-- Link -->
+                <div class="form-group">
+                    <label for="link">
+                        Guruh Linki
+                    </label>
+                    <input type="text"
+                           id="link"
+                           name="link"
+                           value="{{ group.link if group else (link or '') }}"
+                           placeholder="https://t.me/rjutb_guruh">
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Guruh invite linki (ixtiyoriy)
+                    </div>
+                </div>
+
+                <!-- Is Required -->
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="is_required"
+                               name="is_required"
+                               {% if group %}
+                                   {% if group.is_required %}checked{% endif %}
+                               {% else %}
+                                   checked
+                               {% endif %}>
+                        <label for="is_required">
+                            <strong>Majburiy Guruh</strong>
+                        </label>
+                    </div>
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Agar majburiy bo'lsa, foydalanuvchilar guruhga a'zo bo'lmay botdan foydalana olmaydi
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i>
+                    {% if group %}
+                        Saqlash
+                    {% else %}
+                        Qo'shish
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Help Sidebar -->
+    <div>
+        <div class="help-card">
+            <div class="help-header">
+                <i class="fas fa-question-circle"></i>
+                <span>Yordam</span>
+            </div>
+            <div class="help-body">
+                <div class="help-section">
+                    <h6><i class="fas fa-info-circle text-primary"></i> Guruh ID Topish:</h6>
+                    <ol>
+                        <li>Guruhga botni admin qiling</li>
+                        <li>Guruhda <code>/id</code> matni yuboring</li>
+                        <li>Bot guruh ID'sini yuboradi</li>
+                    </ol>
+                </div>
+
+                <hr style="border-color: rgba(99, 102, 241, 0.1); margin: 20px 0;">
+
+                <div class="help-section">
+                    <h6><i class="fas fa-bullhorn text-info"></i> Kanal ID Topish:</h6>
+                    <ol>
+                        <li>Kanaldan biror xabarni botga forward qiling</li>
+                        <li>Bot sizga kanal ID'sini yuboradi</li>
+                        <li>ID'ni copy qilib bu yerga joylashtiring</li>
+                    </ol>
+                </div>
+
+                <hr style="border-color: rgba(99, 102, 241, 0.1); margin: 20px 0;">
+
+                <div class="help-section">
+                    <h6><i class="fas fa-lock text-success"></i> Majburiy Guruh:</h6>
+                    <p>
+                        Foydalanuvchilar botdan foydalanishdan oldin guruhga a'zo bo'lishlari shart.
+                    </p>
+                </div>
+
+                <hr style="border-color: rgba(99, 102, 241, 0.1); margin: 20px 0;">
+
+                <div class="help-section">
+                    <h6><i class="fas fa-unlock text-warning"></i> Ixtiyoriy Guruh:</h6>
+                    <p>
+                        Foydalanuvchilar guruhga a'zo bo'lmasdan ham botdan foydalanishlari mumkin.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% if group %}
+        <!-- Group Info Card -->
+        <div class="info-card">
+            <div class="info-header">
+                <i class="fas fa-info-circle"></i>
+                <span>Guruh Ma'lumotlari</span>
+            </div>
+            <div class="info-body">
+                <div class="info-item">
+                    <strong>ID:</strong>
+                    <p>{{ group.id }}</p>
+                </div>
+                <div class="info-item">
+                    <strong>Chat ID:</strong><br>
+                    <code>{{ group.chat_id }}</code>
+                </div>
+                <div class="info-item">
+                    <strong>Qo'shilgan:</strong>
+                    <p>{{ group.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                </div>
+                {% if group.updated_at %}
+                <div class="info-item">
+                    <strong>Yangilangan:</strong>
+                    <p>{{ group.updated_at.strftime('%d.%m.%Y %H:%M') }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <strong>Diqqat:</strong>
+                <p>Guruh ID o'zgartirilmaydi! Faqat nomi, linki va holatini tahrirlash mumkin.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

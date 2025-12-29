@@ -8,6 +8,7 @@ text_router = Router()
 MAX_STORED_MESSAGES = 1
 user_text_messages = {}
 
+
 # Shaxsiy chatdagi FAQAT MATNLAR uchun
 @text_router.message(
     F.chat.type == ChatType.PRIVATE,
@@ -29,17 +30,52 @@ async def handle_private_texts(message: Message):
             print(f"[ERROR] delete_message: {e}")
 
 
+# Kanal ID olish uchun - BIRINCHI BO'LISHI KERAK!
+@text_router.message(
+    F.chat.type == ChatType.PRIVATE,
+    F.forward_from_chat  # Forward qilingan xabar
+)
+async def forward_channel_id(message: Message):
+    """Kanaldan forward qilingan xabardan ID olish"""
+    chat = message.forward_from_chat
+
+    print(f"[DEBUG] Forward from: {chat.type} - {chat.title}")  # Debug
+
+    if chat.type == ChatType.CHANNEL:
+        await message.answer(
+            f"📢 Kanal Nomi: <b>{chat.title}</b>\n"
+            f"🆔 Kanal ID: <code>{chat.id}</code>\n\n"
+            f"💡 Bu ID'ni admin panelga joylashtiring!",
+            parse_mode=ParseMode.HTML
+        )
+    elif chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
+        await message.answer(
+            f"📢 Guruh Nomi: <b>{chat.title}</b>\n"
+            f"🆔 Guruh ID: <code>{chat.id}</code>",
+            parse_mode=ParseMode.HTML
+        )
+
+
 # Guruh yoki kanal ichida /id komandasi ishlaydi
 @text_router.message(F.text == "/id")
 async def send_chat_id(message: Message):
-    if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP, ChatType.CHANNEL]:
+    if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         chat = message.chat
         chat_title = chat.title or "Noma'lum"
         chat_id = chat.id
 
         await message.answer(
-            f"📢 Nomi : <b>{chat_title}</b>\n"
-            f"🆔 Chat ID : <code>{chat_id}</code>",
+            f"📢 Guruh Nomi: <b>{chat_title}</b>\n"
+            f"🆔 Guruh ID: <code>{chat_id}</code>",
             parse_mode=ParseMode.HTML
         )
-    # Shaxsiy chatda /id ishlamaydi
+    elif message.chat.type == ChatType.CHANNEL:
+        chat = message.chat
+        chat_title = chat.title or "Noma'lum"
+        chat_id = chat.id
+
+        await message.answer(
+            f"📢 Kanal Nomi: <b>{chat_title}</b>\n"
+            f"🆔 Kanal ID: <code>{chat_id}</code>",
+            parse_mode=ParseMode.HTML
+        )

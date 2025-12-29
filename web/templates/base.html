@@ -555,6 +555,11 @@
                     <span>Xodimlar</span>
                 </a>
 
+                <a href="{{ url_for('groups.list_groups') }}" class="nav-item {% if 'groups' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Guruhlar</span>
+                </a>
+
                 <div class="nav-section">
                     <i class="fas fa-boxes"></i>
                     <span>Ma'lumotlar Bo'limi</span>

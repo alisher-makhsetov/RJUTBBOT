@@ -32,167 +32,45 @@ bot/handlers/
 
 web/
 ├── __init__.py
-├── app.py                    ✅ YANGI
-├── config.py                 ✅ YANGILANDI
-├── routes/                   ✅ YANGI
+├── app.py
+├── config.py
+├── models.py
+│
+├── routes/
 │   ├── __init__.py
-│   ├── auth.py              ✅ YANGI
-│   ├── dashboard.py         ✅ YANGI
-│   ├── folder.py            (keyingi)
-│   ├── file.py              (keyingi)
-│   ├── accident.py          (keyingi)
-│   ├── conspect.py          (keyingi)
-│   ├── video.py             (keyingi)
-│   └── test.py              (keyingi)
+│   ├── auth.py
+│   ├── dashboard.py
+│   ├── folder.py
+│   ├── file.py
+│   ├── accident.py
+│   ├── conspect.py
+│   ├── video.py
+│   └── test.py
+│
 ├── templates/
-│   ├── base.html            (keyingi - sidebar, navbar)
+│   ├── base.html
+│   ├── dashboard.html
 │   ├── auth/
-│   │   └── login.html       (keyingi - yangilangan)
+│   │   └── login.html
 │   ├── dashboard/
-│   │   └── index.html       (keyingi - yangilangan)
-│   └── errors/
-│       ├── 404.html         (keyingi)
-│       └── 500.html         (keyingi)
-├── static/                   ✅ MAVJUD
-│   ├── css/
-│   ├── js/
-│   └── img/
-└── utils/
-    └── db_utils.py          (keyingi)
-
-
-TELEGRAM XABARNOMA (KEYINROQ):
-0 2 * * * cd /home/alisher/PycharmProjects/RJUTBBOT && /home/alisher/PycharmProjects/RJUTBBOT/.venv/bin/python /home/alisher/PycharmProjects/RJUTBBOT/cleanup_monthly.py >> /home/alisher/PycharmProjects/RJUTBBOT/logs/cleanup.log 2>&1
-SERVER'DA CRON JOB SOZLASH:
-crontab -e
-
-rjutb@5653801-gt94611:~$ cd RJUTBBOT
-rjutb@5653801-gt94611:~/RJUTBBOT$ ls -la
-total 88
-drwxrwxr-x 9 rjutb rjutb 4096 Dec 16 10:01 .
-drwxr-x--- 3 rjutb rjutb 4096 Dec 16 10:01 ..
--rw-rw-r-- 1 rjutb rjutb 3742 Dec 16 10:01 alembic.ini
-drwxrwxr-x 5 rjutb rjutb 4096 Dec 16 10:01 bot
--rw-rw-r-- 1 rjutb rjutb 5376 Dec 16 10:01 cleanup_monthly.py
-drwxrwxr-x 2 rjutb rjutb 4096 Dec 16 10:01 db
--rw-rw-r-- 1 rjutb rjutb  835 Dec 16 10:01 docker-compose.yml
--rw-rw-r-- 1 rjutb rjutb  330 Dec 16 10:01 Dockerfile
--rw-rw-r-- 1 rjutb rjutb   11 Dec 16 10:01 .dockerignore
--rw-rw-r-- 1 rjutb rjutb  273 Dec 16 10:01 env_copy
-drwxrwxr-x 8 rjutb rjutb 4096 Dec 16 10:01 .git
--rw-rw-r-- 1 rjutb rjutb  760 Dec 16 10:01 .gitignore
-drwxrwxr-x 5 rjutb rjutb 4096 Dec 16 10:01 locales
--rw-rw-r-- 1 rjutb rjutb 2706 Dec 16 10:01 main.py
--rw-rw-r-- 1 rjutb rjutb  668 Dec 16 10:01 Makefile
-drwxrwxr-x 3 rjutb rjutb 4096 Dec 16 10:01 migrations
--rw-rw-r-- 1 rjutb rjutb 2776 Dec 16 10:01 plan
--rw-rw-r-- 1 rjutb rjutb 1038 Dec 16 10:01 requirements.txt
--rw-rw-r-- 1 rjutb rjutb  590 Dec 16 10:01 test.py
-drwxrwxr-x 2 rjutb rjutb 4096 Dec 16 10:01 utils
-drwxrwxr-x 5 rjutb rjutb 4096 Dec 16 10:01 web
-rjutb@5653801-gt94611:~/RJUTBBOT$ ls -R
-.:
-alembic.ini  bot  cleanup_monthly.py  db  docker-compose.yml  Dockerfile  env_copy  locales  main.py  Makefile  migrations  plan  requirements.txt  test.py  utils  web
-
-./bot:
-buttons  distpatchers.py  handlers  middlewares.py  states.py  utils
-
-./bot/buttons:
-inline.py  reply.py
-
-./bot/handlers:
-common  group_events.py  __init__.py  language_handler.py  media_handler.py  mm  start_handler.py  sx  text_handler.py
-
-./bot/handlers/common:
-conspect_handler.py  conspect_helpers.py  folder_handler.py  folder_helpers.py  __init__.py  test_handler.py  test_helpers.py  video_handler.py  video_helpers.py
-
-./bot/handlers/mm:
-__init__.py  mm_accident_handler.py  mm_accident_helpers.py  mm_main_handler.py
-
-./bot/handlers/sx:
-__init__.py  sx_main_handler.py
-
-./bot/utils:
-constants.py  message_helpers.py  name_helpers.py  stats.py  texts.py  transliterate.py  user_helpers.py
-
-./db:
-__init__.py  models.py  utils.py
-
-./locales:
-kk  messages.pot  ru  uz
-
-./locales/kk:
-LC_MESSAGES
-
-./locales/kk/LC_MESSAGES:
-messages.mo  messages.po
-
-./locales/ru:
-LC_MESSAGES
-
-./locales/ru/LC_MESSAGES:
-messages.mo  messages.po
-
-./locales/uz:
-LC_MESSAGES
-
-./locales/uz/LC_MESSAGES:
-messages.mo  messages.po
-
-./migrations:
-env.py  README  script.py.mako  versions
-
-./migrations/versions:
-e00b0f953212_update_test_text_to_text_type.py
-
-./utils:
-env_data.py  settings.py
-
-./web:
-app.py  config.py  __init__.py  routes  static  templates
-
-./web/routes:
-accident.py  auth.py  conspect.py  dashboard.py  file.py  folder.py  __init__.py  test.py  video.py
-
-./web/static:
-css  img  __init__.py  js
-
-./web/static/css:
-custom.css
-
-./web/static/img:
-logo2.png  logo.png
-
-./web/static/js:
-custom.js
-
-./web/templates:
-accident  auth  base.html  conspect  dashboard  dashboard.html  errors  file  folder  test  video
-
-./web/templates/accident:
-categories_create.html  categories_edit.html  categories.html  create.html  edit.html  list.html  view.html  years_create.html  years.html
-
-./web/templates/auth:
-login.html
-
-./web/templates/conspect:
-categories_create.html  categories_edit.html  categories.html  create.html  edit.html  list.html  view.html
-
-./web/templates/dashboard:
-index.html
-
-./web/templates/errors:
-404.html  500.html
-
-./web/templates/file:
-create.html  edit.html  list.html  view.html
-
-./web/templates/folder:
-create.html  edit.html  list.html  view.html
-
-./web/templates/test:
-categories_create.html  categories_edit.html  categories.html  create.html  edit.html  list.html  view.html
-
-./web/templates/video:
-categories_create.html  categories_edit.html  categories.html  create.html  edit.html  list.html  view.html
-rjutb@5653801-gt94611:~/RJUTBBOT$
+│   │   └── index.html
+│   ├── errors/
+│   │   ├── 404.html
+│   │   └── 500.html
+│   ├── conspect/
+│   │     ├── categories.html
+│   │     ├── categories_create.html
+│   │     ├── categories_edit.html
+│   │     ├── create.html
+│   │     ├── edit.html
+│   │     ├── list.html
+│   │     └── view.html
+│   │
+│   ├── ...
+│   ...
+│
+├── static/
+    ├──__init__.py
+    ├── css/
+    ├── js/
+    └── img/
